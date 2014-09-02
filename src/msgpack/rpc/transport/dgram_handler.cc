@@ -76,7 +76,6 @@ void dgram_handler::on_read(const boost::system::error_code& err, size_t nbytes)
                 on_message(msg, z, m_remote);
             }
 
-            m_pac.rewind_buffer();
             m_pac.reserve_buffer(MSGPACK_UNPACKER_RESERVE_SIZE);
             m_socket.async_receive_from(
                 boost::asio::buffer(m_pac.buffer(), m_pac.buffer_capacity()),
