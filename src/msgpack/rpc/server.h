@@ -77,6 +77,7 @@ public:
     }
 
     server& listen(const std::string& host, uint16_t port) {
+        m_instance.serve(shared_from_this());
         m_instance.listen(host, port);
         return m_instance;
     }
