@@ -36,13 +36,13 @@ public:
     builder() : m_timeout(30) { }
     virtual ~builder() { }
 
-    virtual std::auto_ptr<client_transport> build(
+    virtual std::unique_ptr<client_transport> build(
         session_impl* s, const address& addr) const = 0;
 
     template <typename IMPL>
     class base;
 
-    virtual std::auto_ptr<builder> copy() const = 0;
+    virtual std::unique_ptr<builder> copy() const = 0;
 
 public:
     void set_timeout(unsigned int sec) {
@@ -62,13 +62,13 @@ class listener
 public:
     virtual ~listener() { }
 
-    virtual std::auto_ptr<server_transport> listen(
+    virtual std::unique_ptr<server_transport> listen(
         server_impl* svr) const = 0;
 
     template <typename IMPL>
     class base;
 
-    virtual std::auto_ptr<listener> copy() const = 0;
+    virtual std::unique_ptr<listener> copy() const = 0;
 };
 
 
@@ -76,8 +76,8 @@ template <typename IMPL>
 class builder::base : public builder
 {
 public:
-    std::auto_ptr<builder> copy() const {
-        return std::auto_ptr<builder>(new IMPL(*static_cast<const IMPL*>(this)));
+    std::unique_ptr<builder> copy() const {
+        return std::unique_ptr<builder>(new IMPL(*static_cast<const IMPL*>(this)));
     }
 };
 
@@ -85,8 +85,8 @@ template <typename IMPL>
 class listener::base : public listener
 {
 public:
-    std::auto_ptr<listener> copy() const {
-        return std::auto_ptr<listener>(new IMPL(*static_cast<const IMPL*>(this)));
+    std::unique_ptr<listener> copy() const {
+        return std::unique_ptr<listener>(new IMPL(*static_cast<const IMPL*>(this)));
     }
 };
 

@@ -32,7 +32,7 @@ public:
     void set_broadcast(bool val);
     bool get_broadcast() const;
 
-    std::auto_ptr<client_transport> build(session_impl* s, const address& addr) const;
+    std::unique_ptr<client_transport> build(session_impl* s, const address& addr) const;
 
 private:
     bool m_broadcast;
@@ -45,7 +45,7 @@ public:
     udp_listener(const address& addr);
     ~udp_listener();
 
-    std::auto_ptr<server_transport> listen(server_impl* svr) const;
+    std::unique_ptr<server_transport> listen(server_impl* svr) const;
 
 private:
     address m_addr;

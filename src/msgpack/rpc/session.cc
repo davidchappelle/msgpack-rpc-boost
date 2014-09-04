@@ -64,13 +64,13 @@ future session_impl::send_request_impl(msgid_t msgid, std::string method,
 }
 
 future session_impl::send_request_impl(msgid_t msgid, std::string method,
-    std::auto_ptr<with_shared_zone<vrefbuffer> > vbuf)
+    std::unique_ptr<with_shared_zone<vrefbuffer> > vbuf)
 {
     DLOG(INFO) << "sending... msgid=" <<  msgid;
     shared_future f(new future_impl(msgid, shared_from_this(), m_loop));
     m_reqtable.insert(msgid, f);
 
-    m_tran->send_data(vbuf);
+    m_tran->send_data(std::move(vbuf));
     return future(method, f);
 }
 
@@ -81,7 +81,7 @@ void session_impl::send_notify_impl(sbuffer* sbuf)
 
 void session_impl::send_notify_impl(auto_vreflife vbuf)
 {
-    m_tran->send_data(vbuf);
+    m_tran->send_data(std::move(vbuf));
 }
 
 msgid_t session_impl::next_msgid()
@@ -140,7 +140,7 @@ void session_impl::on_response(msgid_t msgid,
         DLOG(ERROR) << "no entry on request table for msgid=" << msgid;
         return;
     }
-    f->set_result(result, error, z);
+    f->set_result(result, error, std::move(z));
 }
 
 void session_impl::on_notify(object method, object params, auto_zone z)
@@ -169,9 +169,9 @@ unsigned int session::get_timeout() const
 }
 
 future session::send_request_impl(msgid_t msgid, std::string method,
-    std::auto_ptr<with_shared_zone<vrefbuffer> > vbuf)
+    std::unique_ptr<with_shared_zone<vrefbuffer> > vbuf)
 {
-    return m_pimpl->send_request_impl(msgid, method, vbuf);
+    return m_pimpl->send_request_impl(msgid, method, std::move(vbuf));
 }
 
 future session::send_request_impl(msgid_t msgid, std::string method,
@@ -185,9 +185,9 @@ void session::send_notify_impl(sbuffer* sbuf)
     return m_pimpl->send_notify_impl(sbuf);
 }
 
-void session::send_notify_impl(std::auto_ptr<with_shared_zone<vrefbuffer> > vbuf)
+void session::send_notify_impl(std::unique_ptr<with_shared_zone<vrefbuffer> > vbuf)
 {
-    return m_pimpl->send_notify_impl(vbuf);
+    return m_pimpl->send_notify_impl(std::move(vbuf));
 }
 
 msgid_t session::next_msgid()

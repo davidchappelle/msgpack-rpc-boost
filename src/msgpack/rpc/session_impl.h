@@ -81,7 +81,7 @@ private:
 
     loop m_loop;
 
-    std::auto_ptr<client_transport> m_tran;
+    std::unique_ptr<client_transport> m_tran;
 
     msgid_t m_msgid_rr;
     reqtable m_reqtable;

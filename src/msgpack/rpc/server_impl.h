@@ -47,7 +47,7 @@ public:
 
 private:
     boost::shared_ptr<dispatcher> m_dp;
-    std::auto_ptr<server_transport> m_stran;
+    std::unique_ptr<server_transport> m_stran;
 
 private:
     server_impl(const server_impl&);

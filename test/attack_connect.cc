@@ -6,7 +6,7 @@
 static size_t ATTACK_THREAD;
 static size_t ATTACK_LOOP;
 
-static std::auto_ptr<attacker> test;
+static std::unique_ptr<attacker> test;
 
 void attack_connect()
 {

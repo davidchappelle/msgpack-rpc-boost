@@ -8,7 +8,7 @@ set(BUILD_TESTS $ENV{BUILD_TESTS})
 ##########################################
 add_definitions(-DGOOGLE_STRIP_LOG=1)
 if (CMAKE_COMPILER_IS_GNUCXX)
-  set(CMAKE_CXX_FLAGS "-g -O -Wall")
+  set(CMAKE_CXX_FLAGS "-std=c++11 -g -O -Wall")
 endif(CMAKE_COMPILER_IS_GNUCXX)
 
 INCLUDE_DIRECTORIES(./src ../include)

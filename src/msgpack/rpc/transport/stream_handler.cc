@@ -66,10 +66,10 @@ void stream_handler::on_read(const boost::system::error_code& err, size_t nbytes
             msgpack::unpacked result;
             while (m_pac->next(&result)) {
                 msgpack::object msg = result.get();
-                // std::auto_ptr<msgpack::zone> z(m_pac->release_zone());
-                std::auto_ptr<msgpack::zone> z = result.zone();
+                // std::unique_ptr<msgpack::zone> z(m_pac->release_zone());
+                std::unique_ptr<msgpack::zone> z = std::move(result.zone());
                 DLOG(INFO) << "obj received: " << msg;
-                on_message(msg, z);
+                on_message(msg, std::move(z));
             }
             if (m_pac->message_size() > 10 * 1024 * 1024) {
                 throw std::runtime_error("message is too large");
@@ -147,21 +147,21 @@ void stream_handler::on_message(object msg, auto_zone z)
     case REQUEST: {
         msg_request<object, object> req;
         msg.convert(&req);
-        on_request(req.msgid, req.method, req.param, z);
+        on_request(req.msgid, req.method, req.param, std::move(z));
     }
     break;
 
     case RESPONSE: {
         msg_response<object, object> res;
         msg.convert(&res);
-        on_response(res.msgid, res.result, res.error, z);
+        on_response(res.msgid, res.result, res.error, std::move(z));
     }
     break;
 
     case NOTIFY: {
         msg_notify<object, object> req;
         msg.convert(&req);
-        on_notify(req.method, req.param, z);
+        on_notify(req.method, req.param, std::move(z));
     }
     break;
 

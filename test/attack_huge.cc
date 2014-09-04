@@ -7,7 +7,7 @@ static size_t ATTACK_SIZE;
 static size_t ATTACK_THREAD;
 static size_t ATTACK_LOOP;
 
-static std::auto_ptr<attacker> test;
+static std::unique_ptr<attacker> test;
 
 using msgpack::type::raw_ref;
 

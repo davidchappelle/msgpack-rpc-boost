@@ -22,8 +22,8 @@ public:
     void send_data(sbuffer* sbuf) {
         m_handler->send_data(m_remote, sbuf);
     }
-    void send_data(std::auto_ptr<vreflife> vbuf) {
-        m_handler->send_data(m_remote, vbuf);
+    void send_data(std::unique_ptr<vreflife> vbuf) {
+        m_handler->send_data(m_remote, std::move(vbuf));
     }
 
 private:
@@ -72,8 +72,7 @@ void dgram_handler::on_read(const boost::system::error_code& err, size_t nbytes)
             msgpack::unpacked result;
             while (m_pac.next(&result)) {
                 msgpack::object msg = result.get();
-                std::auto_ptr<msgpack::zone> z = result.zone();
-                on_message(msg, z, m_remote);
+                on_message(msg, std::move(result.zone()), m_remote);
             }
 
             m_pac.reserve_buffer(MSGPACK_UNPACKER_RESERVE_SIZE);
@@ -124,7 +123,7 @@ void dgram_handler::send_data(auto_vreflife vbuf)
     if (m_socket.is_open() == false)
         return;
     udp::endpoint remote_ep = m_socket.remote_endpoint();
-    send_data(remote_ep, vbuf);
+    send_data(remote_ep, std::move(vbuf));
 }
 
 void dgram_handler::send_data(udp::endpoint& ep, auto_vreflife vbuf)
@@ -149,21 +148,21 @@ void dgram_handler::on_message(object msg, auto_zone z, udp::endpoint& ep)
     case REQUEST: {
         msg_request<object, object> req;
         msg.convert(&req);
-        on_request(req.msgid, req.method, req.param, z, ep);
+        on_request(req.msgid, req.method, req.param, std::move(z), ep);
     }
     break;
 
     case RESPONSE: {
         msg_response<object, object> res;
         msg.convert(&res);
-        on_response(res.msgid, res.result, res.error, z);
+        on_response(res.msgid, res.result, res.error, std::move(z));
     }
     break;
 
     case NOTIFY: {
         msg_notify<object, object> req;
         msg.convert(&req);
-        on_notify(req.method, req.param, z);
+        on_notify(req.method, req.param, std::move(z));
     }
     break;
 

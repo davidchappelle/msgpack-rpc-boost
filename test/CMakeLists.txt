@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.6)
 PROJECT(test)
 
-set(CMAKE_CXX_FLAGS "-g -Wall")
+set(CMAKE_CXX_FLAGS "-std=c++11 -g -Wall")
 
 find_library(LIBMSGPACK NAMES "libmsgpack.a" "msgpack" PATHS "../../lib")
 find_library(GLOG_LIBRARIES NAMES "glog" PATHS "../../lib")

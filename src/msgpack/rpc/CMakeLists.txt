@@ -14,6 +14,10 @@ CONFIGURE_FILE(version.h.in version.h)
 #mplex(caller)
 #endif(NOT WIN32)
 
+if (CMAKE_COMPILER_IS_GNUCXX)
+    set(CMAKE_CXX_FLAGS "-std=c++11 -g -O -Wall")
+endif(CMAKE_COMPILER_IS_GNUCXX)
+
 INCLUDE_DIRECTORIES(../..)
 
 SET(MSGPACK_RPC_SRC

@@ -56,7 +56,7 @@ private:
     loop m_loop;
     std::map<address, entry_t> m_table;
     boost::mutex m_table_mutex;
-    std::auto_ptr<builder> m_builder;
+    std::unique_ptr<builder> m_builder;
 
 private:
     session_pool_impl(const session_pool_impl&);

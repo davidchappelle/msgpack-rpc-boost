@@ -115,12 +115,12 @@ public:
 
 private:
 	rpc::address m_listen_addr;
-	std::auto_ptr<rpc::listener> m_listener;
+	std::unique_ptr<rpc::listener> m_listener;
 
 	rpc::address m_connect_addr;
-	std::auto_ptr<rpc::builder> m_builder;
+	std::unique_ptr<rpc::builder> m_builder;
 
-	std::auto_ptr<rpc::server> m_svr;
+	std::unique_ptr<rpc::server> m_svr;
 	boost::shared_ptr<rpc::dispatcher> m_dp;
 
 	size_t m_nthreads;

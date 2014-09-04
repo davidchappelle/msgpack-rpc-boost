@@ -9,8 +9,8 @@ static size_t ATTACK_THREAD;
 static size_t ATTACK_LOOP;
 static size_t ATTACK_SIZE = 1024;
 
-static std::auto_ptr<attacker> test;
-static std::auto_ptr<rpc::session_pool> sp;
+static std::unique_ptr<attacker> test;
+static std::unique_ptr<rpc::session_pool> sp;
 
 using msgpack::type::raw_ref;
 

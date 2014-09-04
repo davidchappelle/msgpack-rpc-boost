@@ -25,7 +25,7 @@ namespace rpc {
 
 
 typedef with_shared_zone<vrefbuffer> vreflife;
-typedef std::auto_ptr<vreflife> auto_vreflife;
+typedef std::unique_ptr<vreflife> auto_vreflife;
 
 
 class message_sendable

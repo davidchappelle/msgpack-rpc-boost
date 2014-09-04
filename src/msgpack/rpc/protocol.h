@@ -34,13 +34,15 @@ typedef uint8_t error_type_t;
 static const message_type_t REQUEST  = 0;
 static const message_type_t RESPONSE = 1;
 static const message_type_t NOTIFY   = 2;
+static const message_type_t UNKNOWN  = 0xff;
 
 static const error_type_t NO_METHOD_ERROR = 0x01;
 static const error_type_t ARGUMENT_ERROR  = 0x02;
 
 
 struct msg_rpc {
-    msg_rpc() { }
+    msg_rpc() :
+        type(UNKNOWN) { }
 
     message_type_t type;
 
@@ -53,7 +55,9 @@ struct msg_rpc {
     bool is_notify()   const {
         return type == NOTIFY;
     }
-
+    bool is_unknown()  const {
+        return type == UNKNOWN;
+    }
     MSGPACK_DEFINE(type);
 };
 
