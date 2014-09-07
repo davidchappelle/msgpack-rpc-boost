@@ -146,7 +146,7 @@ inline void request::call(Result& res, Error& err, shared_zone z)
     msg_response<Result&, Error> msgres(res, err, get_msgid());
     msgpack::pack(*vbuf, msgres);
 
-    send_data(vbuf);
+    send_data(std::move(vbuf));
 }
 
 template <typename Result>
