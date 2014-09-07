@@ -67,7 +67,7 @@ void stream_handler::on_read(const boost::system::error_code& err, size_t nbytes
             while (m_pac->next(&result)) {
                 msgpack::object msg = result.get();
                 // std::unique_ptr<msgpack::zone> z(m_pac->release_zone());
-                std::unique_ptr<msgpack::zone> z = std::move(result.zone());
+                std::unique_ptr<msgpack::zone> z(result.zone().release());
                 DLOG(INFO) << "obj received: " << msg;
                 on_message(msg, std::move(z));
             }
