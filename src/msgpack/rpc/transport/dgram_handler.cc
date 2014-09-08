@@ -72,7 +72,8 @@ void dgram_handler::on_read(const boost::system::error_code& err, size_t nbytes)
             msgpack::unpacked result;
             while (m_pac.next(&result)) {
                 msgpack::object msg = result.get();
-                on_message(msg, std::move(result.zone()), m_remote);
+                auto_zone z = std::move(result.zone());
+                on_message(msg, std::move(z), m_remote);
             }
 
             m_pac.reserve_buffer(MSGPACK_UNPACKER_RESERVE_SIZE);
