@@ -1,5 +1,5 @@
 project(mprpc)
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.8)
 
 set(VERSION_MAJOR 0)
 set(VERSION_MINOR 2)
@@ -33,28 +33,40 @@ IF(WIN32)
   SET(Boost_USE_STATIC_LIBS true)
 ENDIF(WIN32)
 
-INCLUDE(FindBoost)
-IF(Boost_FOUND)
-	SET(Boost_USE_MULTITHREADED ON)
-	SET(Boost_ADDITIONAL_VERSIONS "1.46.1" "1.40.0")
-	FIND_PACKAGE(Boost COMPONENTS system thread filesystem regex)
-	INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
-	LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
-ELSE(Boost_FOUND)
-	MESSAGE(FATAL_ERROR "The boost library was not found on your system.")
-ENDIF(Boost_FOUND)
+find_package (Boost REQUIRED COMPONENTS COMPONENTS system thread filesystem regex)
+find_package (OpenSSL QUIET)
+find_library (MSGPACK_LIBRARY NAMES "msgpack")
+if (MSGPACK_LIBRARY-NOTFOUND)
+    message (FATAL_ERROR "The msgpack library was not found on your system.")
+endif (MSGPACK_LIBRARY-NOTFOUND)
+find_path (MSGPACK_INCLUDE_DIR NAMES "msgpack.hpp" )
+if (MSGPACK_INCLUDE_DIR-NOTFOUND)
+    message (FATAL_ERROR "The msgpack header was not found on your system.")
+endif (MSGPACK_INCLUDE_DIR-NOTFOUND)
 
-find_package(OpenSSL QUIET)
-if (NOT OPENSSL_FOUND)
-  set(LIBCRYPTO "crypto")
-  set(LIBSSL "ssl")
-  set(OPENSSL_LIBRARIES ${LIBCRYPTO} ${LIBSSL})
-endif(NOT OPENSSL_FOUND)
-include_directories(${OPENSSL_INCLUDE_DIR})
+find_library (GLOG_LIBRARY NAMES "glog")
+if (GLOG_LIBRARY-NOTFOUND)
+    message (FATAL_ERROR "The glog library was not found on your system.")
+endif (GLOG_LIBRARY-NOTFOUND)
+find_path (GLOG_INCLUDE_DIR NAMES "logging.h" PATH_SUFFIXES glog)
+if (GLOG_INCLUDE_DIR-NOTFOUND)
+    message (FATAL_ERROR "The glog header was not found on your system.")
+endif (GLOG_INCLUDE_DIR-NOTFOUND)
+
+include_directories (${Boost_INCLUDE_DIRS}
+  ${MSGPACK_INCLUDE_DIR}
+  ${GLOG_INCLUDE_DIR}
+  ${OPENSSL_INCLUDE_DIRS})
+
+link_libraries (${Boost_LIBRARIES}
+    ${MSGPACK_LIBRARY}
+    ${GLOG_LIBRARY}
+    ${OPENSSL_LIBRARIES})
+
 ##########################################
 
 #Macro for the caller.hmpl & cclog.hmpl (any more ?)
-MACRO(mplex SOURCE) 
+MACRO(mplex SOURCE)
   set(OUTFILE ${CMAKE_CURRENT_SOURCE_DIR}/${SOURCE}.h)
   set(INFILE ${CMAKE_CURRENT_SOURCE_DIR}/${SOURCE}.hmpl)
 
