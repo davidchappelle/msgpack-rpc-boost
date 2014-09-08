@@ -1,16 +1,10 @@
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.8)
+
 PROJECT(test)
 
 set(CMAKE_CXX_FLAGS "-std=c++11 -g -Wall")
 
-find_library(LIBMSGPACK NAMES "libmsgpack.a" "msgpack" PATHS "../../lib")
-find_library(GLOG_LIBRARIES NAMES "glog" PATHS "../../lib")
-set(LIBMPRPC "${CMAKE_BINARY_DIR}/src/msgpack/rpc/libmprpc.a")
-
-link_libraries(${LIBMPRPC} ${LIBMSGPACK} ${GLOG_LIBRARIES}
-  ${Boost_SYSTEM_LIBRARY} ${Boost_THREAD_LIBRARY} ${LIBPTHREAD} ${LIBBOOST_THREAD}
-  ${Boost_PROGRAM_OPTIONS_LIBRARY} ${OPENSSL_LIBRARIES}
-) 
+link_libraries(mrpc-static)
 
 add_executable(address_test address_test.cc)
 add_executable(sync_call sync_call.cc)
