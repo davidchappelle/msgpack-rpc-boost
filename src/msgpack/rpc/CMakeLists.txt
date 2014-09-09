@@ -10,10 +10,6 @@ SET(VERSION "${VERSION_MAJOR}.${VERSION_MINOR}")
 
 CONFIGURE_FILE(version.h.in version.h)
 
-#if (NOT WIN32)
-#mplex(caller)
-#endif(NOT WIN32)
-
 if (CMAKE_COMPILER_IS_GNUCXX)
     set(CMAKE_CXX_FLAGS "-std=c++11 -g -O -Wall")
 endif(CMAKE_COMPILER_IS_GNUCXX)
