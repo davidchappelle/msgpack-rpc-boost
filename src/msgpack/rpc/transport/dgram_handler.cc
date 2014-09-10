@@ -1,12 +1,12 @@
 #include "dgram_handler.h"
 
-#include "../types.h"
 #include "../protocol.h"
-#include "../session_impl.h"
 #include "../server_impl.h"
+#include "../session_impl.h"
 #include "../transport_impl.h"
-#define GLOG_NO_ABBREVIATED_SEVERITIES
-#include <glog/logging.h>
+#include "../types.h"
+
+#include <boost/log/trivial.hpp>
 
 namespace msgpack {
 namespace rpc {
@@ -66,7 +66,7 @@ void dgram_handler::on_read(const boost::system::error_code& err, size_t nbytes)
 {
     bool failed = false;
     if (!err) {
-        DLOG(INFO) << "received from: " << m_remote;
+        BOOST_LOG_TRIVIAL(debug) << "received from: " << m_remote;
         try {
             m_pac.buffer_consumed(nbytes);
             msgpack::unpacked result;
@@ -88,14 +88,12 @@ void dgram_handler::on_read(const boost::system::error_code& err, size_t nbytes)
         }
         catch(std::exception& e)
         {
-            LOG(ERROR) << "on_read() exception: "
-                << boost::diagnostic_information(e).c_str();
+            BOOST_LOG_TRIVIAL(error) << "on_read() exception: " << boost::diagnostic_information(e).c_str();
             failed = true;
         }
     }
-    else {
-        LOG_IF(ERROR, err.value() != 2) << "on_read() failed : "
-            << err.value() << ", " <<  err.message();
+    else if (err.value() != 2) {
+        BOOST_LOG_TRIVIAL(error) << "on_read() failed : " << err.value() << ", " <<  err.message();
     }
 
     if (err || failed) {
@@ -115,7 +113,7 @@ void dgram_handler::send_data(sbuffer* sbuf)
 void dgram_handler::send_data(udp::endpoint& ep, sbuffer* sbuf)
 {
     boost::mutex::scoped_lock lock(mutex);
-    DLOG(INFO) << "send sbuf to : " << ep;
+    BOOST_LOG_TRIVIAL(debug) << "send sbuf to : " << ep;
     m_socket.send_to(boost::asio::buffer(sbuf->data(), sbuf->size()), ep);
 }
 
@@ -136,7 +134,7 @@ void dgram_handler::send_data(udp::endpoint& ep, auto_vreflife vbuf)
     for (int i = 0; i < (int)vbuf->vector_size(); ++i) {
         buffers.push_back(boost::asio::buffer(vec[i].iov_base, vec[i].iov_len));
     }
-    DLOG(INFO) << "send vbuf to : " << ep;
+    BOOST_LOG_TRIVIAL(debug) << "send vbuf to : " << ep;
     m_socket.send_to(buffers, ep);
 }
 

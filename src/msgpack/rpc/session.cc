@@ -15,14 +15,15 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 //
-#include "atomic_ops.h"
 #include "session.h"
-#include "session_impl.h"
+
+#include "atomic_ops.h"
+#include "exception_impl.h"
 #include "future_impl.h"
 #include "request_impl.h"
-#include "exception_impl.h"
-#define GLOG_NO_ABBREVIATED_SEVERITIES
-#include <glog/logging.h>
+#include "session_impl.h"
+
+#include <boost/log/trivial.hpp>
 
 
 namespace msgpack {
@@ -55,7 +56,7 @@ session_impl::create(const builder& b, const address addr, loop lo)
 future session_impl::send_request_impl(msgid_t msgid, std::string method,
     sbuffer* sbuf)
 {
-    DLOG(INFO) << "sending... msgid=" << msgid;
+    BOOST_LOG_TRIVIAL(debug) << "sending... msgid=" << msgid;
     shared_future f(new future_impl(msgid, shared_from_this(), m_loop));
     m_reqtable.insert(msgid, f);
 
@@ -66,7 +67,7 @@ future session_impl::send_request_impl(msgid_t msgid, std::string method,
 future session_impl::send_request_impl(msgid_t msgid, std::string method,
     std::unique_ptr<with_shared_zone<vrefbuffer> > vbuf)
 {
-    DLOG(INFO) << "sending... msgid=" <<  msgid;
+    BOOST_LOG_TRIVIAL(debug) << "sending... msgid=" <<  msgid;
     shared_future f(new future_impl(msgid, shared_from_this(), m_loop));
     m_reqtable.insert(msgid, f);
 
@@ -98,7 +99,9 @@ void session_impl::step_timeout()
                 it != timedout.end(); ++it) {
             shared_future& f = *it;
             f->set_result(object(), TIMEOUT_ERROR, auto_zone());
-            DLOG(WARNING) << "timeout " << f->msgid();
+#ifndef NDEBUG
+            BOOST_LOG_TRIVIAL(warning) << "timeout " << f->msgid();
+#endif
         }
     }
 }
@@ -134,10 +137,10 @@ void session_impl::on_system_error(const boost::system::error_code& err)
 void session_impl::on_response(msgid_t msgid,
                                object result, object error, auto_zone z)
 {
-    DLOG(INFO) << "response msgid=" << msgid;
+    BOOST_LOG_TRIVIAL(debug) << "response msgid=" << msgid;
     shared_future f = m_reqtable.take(msgid);
     if (!f) {
-        DLOG(ERROR) << "no entry on request table for msgid=" << msgid;
+        BOOST_LOG_TRIVIAL(error) << "no entry on request table for msgid=" << msgid;
         return;
     }
     f->set_result(result, error, std::move(z));

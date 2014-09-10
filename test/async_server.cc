@@ -1,10 +1,13 @@
 #include "echo_server.h"
-#include <iostream>
+
 #include <boost/bind.hpp>
+#include <boost/log/core.hpp>
+#include <boost/log/expressions.hpp>
+#include <boost/log/trivial.hpp>
+#include <iostream>
 #include <msgpack/rpc/server.h>
 #include <msgpack/rpc/client.h>
 #include <signal.h>
-#include <glog/logging.h>
 
 namespace rpc {
     using namespace msgpack::rpc;
@@ -38,9 +41,7 @@ private:
 
 int main(int argc, char **argv)
 {
-    google::InitGoogleLogging(argv[0]);
-    google::SetStderrLogging(google::INFO);
-    google::LogToStderr();
+    boost::log::core::get()->set_filter(boost::log::trivial::severity >= boost::log::trivial::info);
     signal(SIGPIPE, SIG_IGN);
 
     // run server {

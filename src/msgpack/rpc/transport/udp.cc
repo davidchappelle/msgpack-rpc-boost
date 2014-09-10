@@ -15,13 +15,14 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 //
-#include "../types.h"
-#include <iostream>
-#include <glog/logging.h>
-#include <vector>
+#include "udp.h"
 
 #include "dgram_handler.h"
-#include "udp.h"
+#include "../types.h"
+
+#include <boost/log/trivial.hpp>
+#include <iostream>
+#include <vector>
 
 namespace msgpack {
 namespace rpc {
@@ -86,12 +87,12 @@ client_socket::~client_socket() { }
 void client_socket::connect(const address& addr)
 {
     boost::asio::ip::udp::endpoint ep(addr.get_addr(), addr.get_port());
-    DLOG(INFO) << "connecting to " << addr;
+    BOOST_LOG_TRIVIAL(debug) << "connecting to " << addr;
 
     boost::system::error_code ec;
     socket().connect(ep, ec);
     if (ec) {
-        DLOG(WARNING) << "connect failed : " << ec.message();
+        BOOST_LOG_TRIVIAL(warning) << "connect failed : " << ec.message();
         socket().close();
         return;
     }

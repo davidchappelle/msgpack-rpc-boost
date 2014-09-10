@@ -1,22 +1,23 @@
 #include <gtest/gtest.h>
-#include <glog/logging.h>
 
 #include "echo_server.h"
-#include "msgpack/rpc/client.h"
-#include "msgpack/rpc/server.h"
-#include "msgpack/rpc/exception.h"
-#include "msgpack/rpc/transport/tcp.h"
+
 #include <boost/asio.hpp>
+#include <boost/log/core.hpp>
+#include <boost/log/expressions.hpp>
+#include <boost/log/trivial.hpp>
 #include <boost/make_shared.hpp>
+#include <msgpack/rpc/client.h>
+#include <msgpack/rpc/server.h>
+#include <msgpack/rpc/exception.h>
+#include <msgpack/rpc/transport/tcp.h>
 
 GTEST_API_ int main(int argc, char **argv)
 {
+    boost::log::core::get()->set_filter(boost::log::trivial::severity >= boost::log::trivial::error);
+
     printf("Running main() from unittest.cc\n");
     testing::InitGoogleTest(&argc, argv);
-    google::InstallFailureSignalHandler();
-    google::InitGoogleLogging(argv[0]);
-    google::SetStderrLogging(google::INFO);
-    google::LogToStderr();
     return RUN_ALL_TESTS();
 }
 

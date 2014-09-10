@@ -1,8 +1,11 @@
 #include "attack.h"
+
+#include <boost/log/core.hpp>
+#include <boost/log/expressions.hpp>
+#include <boost/log/trivial.hpp>
 #include <iostream>
-#include <glog/logging.h>
-#include <vector>
 #include <signal.h>
+#include <vector>
 
 static size_t ATTACK_DEPTH;
 static size_t ATTACK_THREAD;
@@ -26,7 +29,7 @@ void attack_pipeline()
         for(size_t j=0; j < ATTACK_DEPTH; ++j) {
             int result = pipeline[j].get<int>();
             if(result != 3) {
-                LOG(ERROR) << "invalid response: " << result;
+                BOOST_LOG_TRIVIAL(error) << "invalid response: " << result;
             }
         }
     }
@@ -34,10 +37,7 @@ void attack_pipeline()
 
 int main(int argc, char **argv)
 {
-    google::InitGoogleLogging(argv[0]);
-    google::InstallFailureSignalHandler();
-    google::SetStderrLogging(google::INFO);
-    google::LogToStderr();
+    boost::log::core::get()->set_filter(boost::log::trivial::severity >= boost::log::trivial::info);
     signal(SIGPIPE, SIG_IGN);
 
     ATTACK_DEPTH  = attacker::option("DEPTH",  25, 100);

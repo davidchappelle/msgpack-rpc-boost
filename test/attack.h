@@ -1,16 +1,17 @@
 #include "echo_server.h"
+
+#include <boost/log/trivial.hpp>
 #include <boost/thread.hpp>
 #include <iostream>
+#include <msgpack/rpc/server.h>
+#include <msgpack/rpc/client.h>
+#include <msgpack/rpc/transport/tcp.h>
+#include <msgpack/rpc/transport/udp.h>
 #include <numeric>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/time.h>
 #include <unistd.h>
-#include <glog/logging.h>
-#include <msgpack/rpc/server.h>
-#include <msgpack/rpc/client.h>
-#include <msgpack/rpc/transport/tcp.h>
-#include <msgpack/rpc/transport/udp.h>
 
 
 class attacker {
@@ -135,9 +136,9 @@ private:
 		try {
 			func();
 		} catch (std::exception& e) {
-			LOG(ERROR) << "error: " << e.what();
+			BOOST_LOG_TRIVIAL(error) << "error: " << e.what();
 		} catch (...) {
-			LOG(ERROR) << "error: unknown error";
+			BOOST_LOG_TRIVIAL(error) << "error: unknown error";
 		}
 
 		struct timeval end_time;

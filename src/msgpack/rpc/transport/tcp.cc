@@ -15,24 +15,23 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 //
-#include "../types.h"
+#include "tcp.h"
+
+#include "stream_handler.h"
+#include "../exception.h"
 #include "../protocol.h"
 #include "../server_impl.h"
 #include "../session_impl.h"
 #include "../transport_impl.h"
-#include "../exception.h"
+#include "../types.h"
 
-#include <vector>
 #include <boost/asio.hpp>
 #include <boost/asio/deadline_timer.hpp>
 #include <boost/bind.hpp>
+#include <boost/log/trivial.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
-#define GLOG_NO_ABBREVIATED_SEVERITIES
-#include <glog/logging.h>
-
-#include "stream_handler.h"
-#include "tcp.h"
+#include <vector>
 
 namespace msgpack {
 namespace rpc {
@@ -180,7 +179,7 @@ client_transport::~client_transport()
 
 inline void client_transport::on_connect_success()
 {
-    DLOG(INFO) << "connect success to " << m_session->get_address();
+    BOOST_LOG_TRIVIAL(debug) << "connect success to " << m_session->get_address();
     m_timer.cancel();
     m_conn->socket().set_option(boost::asio::ip::tcp::no_delay(true));
     m_conn->start();
@@ -190,13 +189,13 @@ void client_transport::on_connect_failed(const boost::system::error_code& err)
 {
     if (err.value() != ETIMEDOUT && m_conn->m_connecting < m_reconnect_limit)
     {
-        DLOG(WARNING) << "connect failed, retrying : " << m_conn->m_connecting;
+        BOOST_LOG_TRIVIAL(warning) << "connect failed, retrying : " << m_conn->m_connecting;
         boost::this_thread::sleep(boost::posix_time::milliseconds(100));
         try_connect();
         return;
     }
 
-    DLOG(WARNING) << "connect to " << m_session->get_address() << " failed.";
+    BOOST_LOG_TRIVIAL(warning) << "connect to " << m_session->get_address() << " failed.";
     m_timer.cancel();
     m_conn->socket().close();
     m_session->on_connect_failed();
@@ -220,7 +219,7 @@ void client_transport::try_connect()
 
     address addr = m_session->get_address();
     boost::asio::ip::tcp::endpoint ep(addr.get_addr(), addr.get_port());
-    DLOG(INFO) << "connecting to " << addr;
+    BOOST_LOG_TRIVIAL(debug) << "connecting to " << addr;
 
     boost::system::error_code ec;
     ++m_conn->m_connecting;
@@ -429,8 +428,7 @@ void server_transport::on_accept(const boost::system::error_code& err)
     if (!err) {
         boost::mutex::scoped_lock lock(m_mutex);
         m_connections.insert(m_conn);
-        DLOG(INFO) << "server_socket accepted : " 
-                   << m_conn->socket().remote_endpoint();
+        BOOST_LOG_TRIVIAL(debug) << "server_socket accepted : " << m_conn->socket().remote_endpoint();
         m_conn->socket().set_option(boost::asio::ip::tcp::no_delay(true));
         m_conn->start();
     }
