@@ -9,7 +9,7 @@ set(BUILD_TESTS $ENV{BUILD_TESTS})
 ##########################################
 set(CMAKE_CXX_FLAGS "-std=c++11 -Wall ${CMAKE_CXX_FLAGS}")
 
-INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src ../include)
+INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src)
 
 find_package (Boost REQUIRED COMPONENTS COMPONENTS system thread filesystem regex log)
 add_definitions(-DBOOST_LOG_DYN_LINK=1) # otherwise Boost.Log fails linking
