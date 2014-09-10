@@ -20,15 +20,16 @@
 
 #include "future.h"
 #include "session_impl.h"
+
 #include <boost/thread.hpp>
 #include <boost/thread/condition_variable.hpp>
-#include <boost/enable_shared_from_this.hpp>
+#include <memory>
 
 namespace msgpack {
 namespace rpc {
 
 
-class future_impl : public boost::enable_shared_from_this<future_impl> {
+class future_impl : public std::enable_shared_from_this<future_impl> {
 public:
     future_impl(msgid_t msgid, shared_session s, loop lo);
     ~future_impl();

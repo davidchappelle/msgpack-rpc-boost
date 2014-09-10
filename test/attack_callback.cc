@@ -3,6 +3,7 @@
 #include <boost/log/core.hpp>
 #include <boost/log/expressions.hpp>
 #include <boost/log/trivial.hpp>
+#include <functional>
 #include <iostream>
 #include <signal.h>
 #include <vector>
@@ -43,7 +44,7 @@ void attack_callback()
         for(size_t j=0; j < ATTACK_DEPTH; ++j) {
             pipeline[j] = s.call("echo_huge", msglife, msg);
             pipeline[j].attach_callback(
-                    boost::bind(callback_func, _1, msg, msglife));
+                    std::bind(callback_func, std::placeholders::_1, msg, msglife));
         }
 
         for(size_t j=0; j < ATTACK_DEPTH; ++j) {

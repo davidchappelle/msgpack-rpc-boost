@@ -18,15 +18,15 @@
 #ifndef MSGPACK_RPC_TYPES_H__
 #define MSGPACK_RPC_TYPES_H__
 
+#include <memory>
 #include <msgpack.hpp>
-#include <boost/shared_ptr.hpp>
 
 namespace msgpack {
 namespace rpc {
 
 
 typedef std::unique_ptr<zone> auto_zone;
-typedef boost::shared_ptr<zone> shared_zone;
+typedef std::shared_ptr<zone> shared_zone;
 
 
 template <typename T>

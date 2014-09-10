@@ -94,10 +94,10 @@ void future_impl::attach_callback(callback_t func)
 {
     boost::mutex::scoped_lock lk(m_mutex);
 
-    assert(func.empty() == false);
+    assert(func);
     if (!m_session) {
         // callback_real(func, future(shared_from_this()));
-        m_loop->submit(boost::bind(&callback_real, func,
+        m_loop->submit(std::bind(&callback_real, func,
                        future(shared_from_this())));
     } else {
         m_callback = func;
@@ -114,9 +114,9 @@ void future_impl::set_result(object result, object error, auto_zone z)
 
     m_cond.notify_all();
 
-    if (!m_callback.empty()) {
+    if (m_callback) {
         callback_real(m_callback, future(shared_from_this()));
-        m_callback.clear();
+        m_callback = nullptr;
     }
 }
 
@@ -209,7 +209,7 @@ object future::error() const
     return m_pimpl->error();
 }
 
-future& future::attach_callback(boost::function<void (future)> func)
+future& future::attach_callback(std::function<void (future)> func)
 {
     m_pimpl->attach_callback(func);
     return *this;

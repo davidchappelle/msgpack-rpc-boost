@@ -1,6 +1,6 @@
-#include <boost/shared_ptr.hpp>
-#include <boost/asio.hpp>
 #include "loop.h"
+
+#include <boost/asio.hpp>
 
 namespace msgpack {
 namespace rpc {
@@ -76,20 +76,20 @@ bool loop_impl::is_running()
 void loop_impl::add_worker(size_t num)
 {
     for (size_t i = 0; i < num; ++i) {
-        boost::shared_ptr<boost::thread> thread(new boost::thread(
-                boost::bind(&boost::asio::io_service::run, &m_io)));
+        std::size_t (boost::asio::io_service::*run_fn)() = &boost::asio::io_service::run;
+        std::shared_ptr<boost::thread> thread(new boost::thread(std::bind(run_fn, &m_io)));
         m_workers.push_back(thread);
     }
 }
 
-void loop_impl::submit(boost::function<void ()> callback)
+void loop_impl::submit(std::function<void ()> callback)
 {
     m_io.post(callback);
 }
 
 // timeout
 
-void loop_impl::step_timeout(int sec, boost::function<bool ()> handler,
+void loop_impl::step_timeout(int sec, std::function<bool ()> handler,
     const boost::system::error_code& err)
 {
     if (err) {
@@ -100,15 +100,15 @@ void loop_impl::step_timeout(int sec, boost::function<bool ()> handler,
         add_timer(sec, handler);
 }
 
-void loop_impl::add_timer(int sec, boost::function<bool ()> handler)
+void loop_impl::add_timer(int sec, std::function<bool ()> handler)
 {
     m_timer.expires_from_now(boost::posix_time::seconds(sec));
-    m_timer.async_wait(boost::bind(&loop_impl::step_timeout, this,
-            sec, handler, boost::asio::placeholders::error));
+    m_timer.async_wait(std::bind(&loop_impl::step_timeout, this,
+            sec, handler, std::placeholders::_1));
 }
 
 int loop_impl::add_signal(int signo,
-    boost::function<void (const boost::system::error_code& error,
+    std::function<void (const boost::system::error_code& error,
         int signo)> handler)
 {
 #if BOOST_VERSION >= 104800
@@ -126,7 +126,7 @@ void loop_impl::remove_signal(int id)
 }
 
 // LOOP
-loop::loop() : boost::shared_ptr<loop_impl>(new loop_impl())
+loop::loop() : std::shared_ptr<loop_impl>(new loop_impl())
 {
 }
 

@@ -18,12 +18,12 @@
 #ifndef MSGPACK_RPC_FUTURE_H__
 #define MSGPACK_RPC_FUTURE_H__
 
-#include <boost/bind.hpp>
-#include <boost/function.hpp>
-#include <boost/shared_ptr.hpp>
-#include "types.h"
-#include "protocol.h"
 #include "impl_fwd.h"
+#include "protocol.h"
+#include "types.h"
+
+#include <functional>
+#include <utility> // for std::move()
 
 namespace msgpack {
 namespace rpc {
@@ -61,7 +61,7 @@ public:
     auto_zone& zone();
     const auto_zone& zone() const;
 
-    future& attach_callback(boost::function<void (future)> func);
+    future& attach_callback(std::function<void (future)> func);
 
     // for std::map and std::list
     bool operator< (const future& f) const;
@@ -111,7 +111,7 @@ public:
 };
 
 
-typedef boost::function<void (future)> callback_t;
+typedef std::function<void (future)> callback_t;
 
 
 template <typename T>

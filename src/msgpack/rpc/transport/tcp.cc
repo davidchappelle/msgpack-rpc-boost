@@ -27,10 +27,8 @@
 
 #include <boost/asio.hpp>
 #include <boost/asio/deadline_timer.hpp>
-#include <boost/bind.hpp>
 #include <boost/log/trivial.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/weak_ptr.hpp>
+#include <functional>
 #include <vector>
 
 namespace msgpack {
@@ -82,7 +80,7 @@ private:
     double m_connect_timeout;
     int m_reconnect_limit;
 
-    boost::shared_ptr<client_socket> m_conn;
+    std::shared_ptr<client_socket> m_conn;
     // keep io_service running in case of without run()
     // test with test/callback.cc
     boost::asio::io_service::work m_work;
@@ -246,7 +244,7 @@ void client_transport::connect()
 
     // connection time out
     m_timer.expires_from_now(boost::posix_time::seconds((long)m_connect_timeout));
-    m_timer.async_wait(boost::bind(&client_transport::on_timeout, this));
+    m_timer.async_wait(std::bind(&client_transport::on_timeout, this));
 
     m_conn->m_connecting = 0;
     try_connect();
@@ -311,7 +309,7 @@ public:
     void close();
     void start_accept();
     void on_accept(const boost::system::error_code& error);
-    void on_system_error(boost::shared_ptr<server_socket> conn);
+    void on_system_error(std::shared_ptr<server_socket> conn);
 
     virtual int get_connection_num();
 
@@ -319,9 +317,9 @@ private:
     weak_server m_wsvr;
     // acceptor used to listen for incoming connections.
     boost::asio::ip::tcp::acceptor m_acceptor;
-    boost::shared_ptr<server_socket> m_conn;
+    std::shared_ptr<server_socket> m_conn;
     // the managed connections
-    std::set<boost::shared_ptr< server_socket> > m_connections;
+    std::set<std::shared_ptr<server_socket> > m_connections;
     boost::mutex m_mutex;
 
 private:
@@ -370,7 +368,7 @@ void server_socket::on_notify(
 void server_socket::on_system_error(const boost::system::error_code& err)
 {
     m_tran->on_system_error(
-        boost::static_pointer_cast<server_socket>(shared_from_this()));
+        std::static_pointer_cast<server_socket>(shared_from_this()));
 }
 
 
@@ -379,7 +377,7 @@ server_transport::server_transport(server_impl* svr, const address& addr) :
     m_conn()
 {
     m_wsvr = weak_server(
-        boost::static_pointer_cast<server_impl>(svr->shared_from_this()));
+        std::static_pointer_cast<server_impl>(svr->shared_from_this()));
 
     // open the acceptor with option to reuse the address
     boost::asio::ip::tcp::endpoint ep(addr.get_addr(), addr.get_port());
@@ -404,7 +402,7 @@ void server_transport::close()
     // stop all connections
     boost::mutex::scoped_lock lock(m_mutex);
     std::for_each(m_connections.begin(), m_connections.end(),
-            boost::bind(&server_socket::stop, _1));
+            std::bind(&server_socket::stop, std::placeholders::_1));
     m_connections.clear();
 }
 
@@ -412,11 +410,10 @@ void server_transport::start_accept()
 {
     m_conn.reset(new server_socket(this, m_wsvr.lock()));
     m_acceptor.async_accept(m_conn->socket(),
-        boost::bind(&server_transport::on_accept, this,
-            boost::asio::placeholders::error));
+        std::bind(&server_transport::on_accept, this, std::placeholders::_1));
 }
 
-void server_transport::on_system_error(boost::shared_ptr<server_socket> conn)
+void server_transport::on_system_error(std::shared_ptr<server_socket> conn)
 {
     boost::mutex::scoped_lock lock(m_mutex);
     m_connections.erase(conn);

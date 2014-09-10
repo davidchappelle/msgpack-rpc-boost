@@ -35,7 +35,7 @@ server_impl::~server_impl()
     close();
 }
 
-void server_impl::serve(boost::shared_ptr<dispatcher> dp)
+void server_impl::serve(std::shared_ptr<dispatcher> dp)
 {
     m_dp = dp;
 }
@@ -97,7 +97,7 @@ server::~server()
     close();
 }
 
-void server::serve(boost::shared_ptr<dispatcher> dp)
+void server::serve(std::shared_ptr<dispatcher> dp)
 {
     static_cast<server_impl*>(m_pimpl.get())->serve(dp);
 }

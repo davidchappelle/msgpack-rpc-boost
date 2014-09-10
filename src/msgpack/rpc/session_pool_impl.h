@@ -20,8 +20,9 @@
 
 #include "session_pool.h"
 #include "transport_impl.h"
-#include <boost/enable_shared_from_this.hpp>
+
 #include <boost/thread.hpp>
+#include <memory>
 
 namespace msgpack {
 namespace rpc {

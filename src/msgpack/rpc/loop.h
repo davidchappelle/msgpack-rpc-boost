@@ -21,8 +21,9 @@
 #include <boost/asio.hpp>
 #include <boost/asio/deadline_timer.hpp>
 #include <boost/function.hpp>
-#include <boost/shared_ptr.hpp>
 #include <boost/thread.hpp>
+#include <functional>
+#include <memory>
 #include <vector>
 
 namespace msgpack {
@@ -43,14 +44,14 @@ public:
     void flush();
     void join();
     void end();
-    void submit(boost::function<void ()> callback);
+    void submit(std::function<void ()> callback);
 
-    int add_signal(int signo, boost::function<void
+    int add_signal(int signo, std::function<void
              (const boost::system::error_code& error, int signo)> handler);
     void remove_signal(int id);
 
-    void add_timer(int sec, boost::function<bool ()> handler);
-    void step_timeout(int sec, boost::function<bool ()> handler,
+    void add_timer(int sec, std::function<bool ()> handler);
+    void step_timeout(int sec, std::function<bool ()> handler,
              const boost::system::error_code& err);
 
 private:
@@ -62,11 +63,11 @@ private:
     boost::asio::signal_set m_sigset;
 #endif
     boost::asio::deadline_timer m_timer;
-    std::vector< boost::shared_ptr<boost::thread> > m_workers;
+    std::vector< std::shared_ptr<boost::thread> > m_workers;
 };
 
 
-class loop : public boost::shared_ptr<loop_impl> {
+class loop : public std::shared_ptr<loop_impl> {
 public:
     loop();
     ~loop();

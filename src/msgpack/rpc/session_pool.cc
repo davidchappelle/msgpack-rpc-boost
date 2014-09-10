@@ -22,6 +22,8 @@
 #include "exception_impl.h"
 #include "transport/tcp.h"
 
+#include <functional>
+
 namespace msgpack {
 namespace rpc {
 
@@ -182,7 +184,7 @@ static bool step_timeout(weak_session_pool wsp)
 
 void session_pool::start_timeout()
 {
-    get_loop()->add_timer(1, boost::bind(&step_timeout,
+    get_loop()->add_timer(1, std::bind(&step_timeout,
         weak_session_pool(m_pimpl)));
 }
 

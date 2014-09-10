@@ -4,6 +4,7 @@
 #include <boost/log/expressions.hpp>
 #include <boost/log/trivial.hpp>
 #include <iostream>
+#include <memory>
 #include <msgpack/rpc/server.h>
 #include <msgpack/rpc/client.h>
 #include <signal.h>
@@ -16,7 +17,7 @@ int main(int argc, char **argv)
     // run server {
     rpc::server svr;
 
-    svr.serve(boost::make_shared<myecho>());
+    svr.serve(std::make_shared<myecho>());
     svr.listen("0.0.0.0", 18811);
 
     svr.start(4);

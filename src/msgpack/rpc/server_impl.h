@@ -21,18 +21,20 @@
 #include "server.h"
 #include "session_pool_impl.h"
 
+#include <memory>
+
 namespace msgpack {
 namespace rpc {
 
 
 class server_impl : public session_pool_impl,
-    public boost::enable_shared_from_this<server_impl>
+    public std::enable_shared_from_this<server_impl>
 {
 public:
     server_impl(const builder&, loop lo);
     ~server_impl();
 
-    void serve(boost::shared_ptr<dispatcher> dp);
+    void serve(std::shared_ptr<dispatcher> dp);
     void listen(const listener& l);
     void close();
 
@@ -46,7 +48,7 @@ public:
     void on_notify(object method, object params, auto_zone z);
 
 private:
-    boost::shared_ptr<dispatcher> m_dp;
+    std::shared_ptr<dispatcher> m_dp;
     std::unique_ptr<server_transport> m_stran;
 
 private:
