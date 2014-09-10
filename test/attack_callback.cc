@@ -1,8 +1,11 @@
 #include "attack.h"
+
+#include <boost/log/core.hpp>
+#include <boost/log/expressions.hpp>
+#include <boost/log/trivial.hpp>
 #include <iostream>
-#include <glog/logging.h>
-#include <vector>
 #include <signal.h>
+#include <vector>
 
 static size_t ATTACK_DEPTH;
 static size_t ATTACK_THREAD;
@@ -19,9 +22,9 @@ void callback_func(rpc::future f, raw_ref msg, rpc::shared_zone msglife)
     raw_ref result = f.get<raw_ref>();
 
     if(result.size != msg.size) {
-        LOG(ERROR) << "invalid size: " << result.size;
+        BOOST_LOG_TRIVIAL(error) << "invalid size: " << result.size;
     } else if(memcmp(result.ptr, msg.ptr, msg.size) != 0) {
-        LOG(ERROR) << "received data don't match with sent data.";
+        BOOST_LOG_TRIVIAL(error) << "received data don't match with sent data.";
     }
 }
 
@@ -51,9 +54,7 @@ void attack_callback()
 
 int main(int argc, char **argv)
 {
-    google::InitGoogleLogging(argv[0]);
-    google::SetStderrLogging(google::INFO);
-    google::LogToStderr();
+    boost::log::core::get()->set_filter(boost::log::trivial::severity >= boost::log::trivial::info);
     signal(SIGPIPE, SIG_IGN);
 
     ATTACK_DEPTH  = attacker::option("DEPTH",  25, 100);

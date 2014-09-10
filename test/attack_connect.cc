@@ -1,6 +1,9 @@
 #include "attack.h"
+
+#include <boost/log/core.hpp>
+#include <boost/log/expressions.hpp>
+#include <boost/log/trivial.hpp>
 #include <iostream>
-#include <glog/logging.h>
 #include <signal.h>
 
 static size_t ATTACK_THREAD;
@@ -16,16 +19,14 @@ void attack_connect()
 
         int result = c.call("add", 1, 2).get<int>();
         if(result != 3) {
-            LOG(ERROR) << "invalid response: " << result;
+            BOOST_LOG_TRIVIAL(error) << "invalid response: " << result;
         }
     }
 }
 
 int main(int argc, char **argv)
 {
-    google::InitGoogleLogging(argv[0]);
-    google::SetStderrLogging(google::INFO);
-    google::LogToStderr();
+    boost::log::core::get()->set_filter(boost::log::trivial::severity >= boost::log::trivial::info);
     signal(SIGPIPE, SIG_IGN);
 
     ATTACK_THREAD = attacker::option("THREAD", 25, 100);

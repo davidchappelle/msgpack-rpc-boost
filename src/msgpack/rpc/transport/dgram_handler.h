@@ -1,14 +1,13 @@
 #ifndef MSGPACK_RPC_TRANSPORT_DGRAM_HANDLER_H__
 #define MSGPACK_RPC_TRANSPORT_DGRAM_HANDLER_H__
 
-#include "../types.h"
 #include "../protocol.h"
-#include "../session_impl.h"
 #include "../server_impl.h"
+#include "../session_impl.h"
 #include "../transport_impl.h"
+#include "../types.h"
+
 #include <boost/asio.hpp>
-#define GLOG_NO_ABBREVIATED_SEVERITIES
-#include <glog/logging.h>
 
 namespace msgpack {
 namespace rpc {

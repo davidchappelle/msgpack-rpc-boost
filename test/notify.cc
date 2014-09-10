@@ -1,14 +1,15 @@
 #include "echo_server.h"
+
+#include <boost/log/core.hpp>
+#include <boost/log/expressions.hpp>
+#include <boost/log/trivial.hpp>
 #include <msgpack/rpc/server.h>
 #include <msgpack/rpc/client.h>
-#include <glog/logging.h>
 #include <signal.h>
 
 int main(int argc, char **argv)
 {
-    google::InitGoogleLogging(argv[0]);
-    google::SetStderrLogging(google::INFO);
-    google::LogToStderr();
+    boost::log::core::get()->set_filter(boost::log::trivial::severity >= boost::log::trivial::info);
     signal(SIGPIPE, SIG_IGN);
 
     // run server {

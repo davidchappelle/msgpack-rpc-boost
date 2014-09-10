@@ -15,10 +15,10 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 //
-#include "future_impl.h"
 #include "exception_impl.h"
-#define GLOG_NO_ABBREVIATED_SEVERITIES
-#include <glog/logging.h>
+#include "future_impl.h"
+
+#include <boost/log/trivial.hpp>
 
 namespace msgpack {
 namespace rpc {
@@ -84,9 +84,9 @@ static void callback_real(callback_t callback, future f)
     try {
         callback(f);
     } catch (std::exception& e) {
-        DLOG(WARNING) << "response callback error: " <<  e.what();
+        BOOST_LOG_TRIVIAL(warning) << "response callback error: " <<  e.what();
     } catch (...) {
-        DLOG(WARNING) << "response callback error: unknown error";
+        BOOST_LOG_TRIVIAL(warning) << "response callback error: unknown error";
     }
 }
 
