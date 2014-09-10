@@ -2,7 +2,9 @@
 
 #include <boost/log/trivial.hpp>
 #include <boost/thread.hpp>
+#include <functional>
 #include <iostream>
+#include <memory>
 #include <msgpack/rpc/server.h>
 #include <msgpack/rpc/client.h>
 #include <msgpack/rpc/transport/tcp.h>
@@ -59,7 +61,7 @@ public:
 		m_svr->start(nthreads);
 	}
 
-	void start_attacker(size_t nthreads, boost::function<void ()> func)
+	void start_attacker(size_t nthreads, std::function<void ()> func)
 	{
 		m_threads.resize(nthreads);
 		m_times.resize(nthreads);
@@ -68,7 +70,7 @@ public:
 		for(size_t i=0; i < m_nthreads; ++i) {
 			m_times[i] = 0;
 			m_threads[i] = new boost::thread(
-					boost::bind(attacker::thread_main, func, &m_times[i]));
+					std::bind(attacker::thread_main, func, &m_times[i]));
 		}
 	}
 
@@ -105,7 +107,7 @@ public:
 			<< "variance      : " << var << std::endl;
 	}
 
-	void run(size_t nthreads, boost::function<void ()> func)
+	void run(size_t nthreads, std::function<void ()> func)
 	{
 		start_server();
 		start_attacker(nthreads, func);
@@ -122,13 +124,13 @@ private:
 	std::unique_ptr<rpc::builder> m_builder;
 
 	std::unique_ptr<rpc::server> m_svr;
-	boost::shared_ptr<rpc::dispatcher> m_dp;
+	std::shared_ptr<rpc::dispatcher> m_dp;
 
 	size_t m_nthreads;
 	std::vector<boost::thread*> m_threads;
 	std::vector<double> m_times;
 
-	static void thread_main(boost::function<void ()> func, double* time)
+	static void thread_main(std::function<void ()> func, double* time)
 	{
 		struct timeval start_time;
 		gettimeofday(&start_time, NULL);

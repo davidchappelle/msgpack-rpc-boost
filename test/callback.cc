@@ -3,7 +3,9 @@
 #include <boost/log/core.hpp>
 #include <boost/log/expressions.hpp>
 #include <boost/log/trivial.hpp>
+#include <functional>
 #include <iostream>
+#include <memory>
 #include <msgpack/rpc/server.h>
 #include <msgpack/rpc/session_pool.h>
 #include <signal.h>
@@ -28,7 +30,7 @@ int main(int argc, char **argv)
     // run server {
     rpc::server svr;
 
-    svr.serve(boost::make_shared<myecho>());
+    svr.serve(std::make_shared<myecho>());
     svr.listen("0.0.0.0", 18811);
 
     svr.start(4);
@@ -46,7 +48,7 @@ int main(int argc, char **argv)
     rpc::future f = s.call("add", 1, 2);
 
     f.attach_callback(
-        boost::bind(add_callback, _1, sp.get_loop()));
+        std::bind(add_callback, std::placeholders::_1, sp.get_loop()));
 
     sp.run(4);
 

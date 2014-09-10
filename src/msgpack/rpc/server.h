@@ -18,18 +18,16 @@
 #ifndef MSGPACK_RPC_SERVER_H__
 #define MSGPACK_RPC_SERVER_H__
 
-#include <boost/shared_ptr.hpp>
-#include <boost/make_shared.hpp>
-#include <boost/enable_shared_from_this.hpp>
-
-#include "session_pool.h"
 #include "request.h"
+#include "session_pool.h"
+
+#include <memory>
 
 namespace msgpack {
 namespace rpc {
 
 
-class dispatcher : public boost::enable_shared_from_this<dispatcher> {
+class dispatcher : public std::enable_shared_from_this<dispatcher> {
 public:
     virtual void dispatch(request req) = 0;
 };
@@ -41,7 +39,7 @@ public:
     server(const builder& b, loop lo = loop());
     virtual ~server();
 
-    void serve(boost::shared_ptr<dispatcher> dp);
+    void serve(std::shared_ptr<dispatcher> dp);
     void close();
 
     void listen(const listener& l);

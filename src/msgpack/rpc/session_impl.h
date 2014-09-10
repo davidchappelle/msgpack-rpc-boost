@@ -18,18 +18,19 @@
 #ifndef MSGPACK_RPC_SESSION_IMPL_H__
 #define MSGPACK_RPC_SESSION_IMPL_H__
 
-#include <boost/enable_shared_from_this.hpp>
 #include "session.h"
 #include "reqtable.h"
 #include "protocol.h"
 #include "transport_impl.h"
 #include "impl_fwd.h"
 
+#include <memory>
+
 namespace msgpack {
 namespace rpc {
 
 
-class session_impl : public boost::enable_shared_from_this<session_impl>
+class session_impl : public std::enable_shared_from_this<session_impl>
 {
 public:
     static shared_session create(const builder& b, const address addr, loop lo);

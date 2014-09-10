@@ -6,7 +6,7 @@
 #include <boost/log/core.hpp>
 #include <boost/log/expressions.hpp>
 #include <boost/log/trivial.hpp>
-#include <boost/make_shared.hpp>
+#include <memory>
 #include <msgpack/rpc/client.h>
 #include <msgpack/rpc/server.h>
 #include <msgpack/rpc/exception.h>
@@ -30,7 +30,7 @@ TEST(EchoServer, Add)
         const int PORT = 18811;
         msgpack::rpc::server server;
 
-        server.serve(boost::make_shared<myecho>());
+        server.serve(std::make_shared<myecho>());
         server.listen("0.0.0.0", PORT);
         server.start(5);
 
@@ -60,13 +60,12 @@ TEST(EchoServer, IncorrectPort)
 {
     using namespace msgpack;
     using namespace msgpack::rpc;
-    using namespace boost;
 
     try {
         const int PORT = 18811;
         msgpack::rpc::server server;
 
-        server.serve(boost::make_shared<myecho>());
+        server.serve(std::make_shared<myecho>());
         server.listen("0.0.0.0", PORT);
 
         msgpack::rpc::client cli("127.0.0.1", 16296);
@@ -90,13 +89,12 @@ TEST(EchoServer, NoMethodError)
 {
     using namespace msgpack;
     using namespace msgpack::rpc;
-    using namespace boost;
 
     try {
         const int PORT = 18811;
         msgpack::rpc::server server;
 
-        server.serve(boost::make_shared<myecho>());
+        server.serve(std::make_shared<myecho>());
         server.listen("0.0.0.0", PORT);
         server.start(1);
 
@@ -121,13 +119,12 @@ TEST(EchoServer, TimeoutErrorSession)
 {
     using namespace msgpack;
     using namespace msgpack::rpc;
-    using namespace boost;
 
     try {
         const int PORT = 18811;
         msgpack::rpc::server server;
 
-        server.serve(boost::make_shared<myecho>());
+        server.serve(std::make_shared<myecho>());
         server.listen("0.0.0.0", PORT);
         server.start(1);
 
@@ -152,13 +149,12 @@ TEST(EchoServer, TimeoutErrorClient)
 {
     using namespace msgpack;
     using namespace msgpack::rpc;
-    using namespace boost;
 
     try {
         const int PORT = 18811;
         msgpack::rpc::server server;
 
-        server.serve(boost::make_shared<myecho>());
+        server.serve(std::make_shared<myecho>());
         server.listen("0.0.0.0", PORT);
         server.start(1);
 
@@ -181,13 +177,12 @@ TEST(EchoServer, Err)
 {
     using namespace msgpack;
     using namespace msgpack::rpc;
-    using namespace boost;
 
     try {
         const int PORT = 18811;
         msgpack::rpc::server server;
 
-        server.serve(boost::make_shared<myecho>());
+        server.serve(std::make_shared<myecho>());
         server.listen("0.0.0.0", PORT);
         server.start(5);
 
@@ -211,13 +206,12 @@ TEST(EchoServer, Notify)
 {
     using namespace msgpack;
     using namespace msgpack::rpc;
-    using namespace boost;
 
     try {
         const int PORT = 18811;
         msgpack::rpc::server server;
 
-        server.serve(boost::make_shared<myecho>());
+        server.serve(std::make_shared<myecho>());
         server.listen("0.0.0.0", PORT);
         server.start(5);
 

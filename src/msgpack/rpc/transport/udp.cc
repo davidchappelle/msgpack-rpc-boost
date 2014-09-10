@@ -66,7 +66,7 @@ public:
 
 private:
     session_impl* m_session;
-    boost::shared_ptr<client_socket> m_conn;
+    std::shared_ptr<client_socket> m_conn;
     boost::asio::io_service::work m_work;
 
 private:
@@ -201,7 +201,7 @@ public:
 
 private:
     weak_server m_wsvr;
-    boost::shared_ptr<server_socket> m_conn;
+    std::shared_ptr<server_socket> m_conn;
 
 private:
     server_transport();
@@ -256,7 +256,7 @@ void server_socket::on_notify(
 server_transport::server_transport(server_impl* svr, const address& addr)
 {
     m_wsvr = weak_server(
-        boost::static_pointer_cast<server_impl>(svr->shared_from_this()));
+        std::static_pointer_cast<server_impl>(svr->shared_from_this()));
 
     m_conn.reset(new transport::udp::server_socket(m_wsvr.lock()));
     m_conn->listen(addr);

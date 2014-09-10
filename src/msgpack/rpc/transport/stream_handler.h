@@ -7,6 +7,8 @@
 #include "../server_impl.h"
 #include "../transport_impl.h"
 
+#include <memory>
+
 namespace msgpack {
 namespace rpc {
 
@@ -14,15 +16,15 @@ class closed_exception : public std::exception { };
 
 
 class stream_handler :  public message_sendable,
-    public boost::enable_shared_from_this<stream_handler>
+    public std::enable_shared_from_this<stream_handler>
 {
 public:
     stream_handler(loop lo);
     virtual ~stream_handler();
 
     boost::asio::ip::tcp::socket& socket() { return m_socket; }
-    boost::shared_ptr<message_sendable> get_response_sender() {
-        return boost::static_pointer_cast<message_sendable>(shared_from_this());
+    std::shared_ptr<message_sendable> get_response_sender() {
+        return std::static_pointer_cast<message_sendable>(shared_from_this());
     }
 
     void start();
@@ -43,7 +45,7 @@ public:
     virtual void on_system_error(const boost::system::error_code& err) = 0;
 
 protected:
-    boost::scoped_ptr<unpacker> m_pac;
+    std::unique_ptr<unpacker> m_pac;
     boost::asio::ip::tcp::socket m_socket;
     boost::asio::io_service::strand m_strand;
     boost::mutex mutex;

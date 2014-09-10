@@ -1,10 +1,11 @@
 #include "echo_server.h"
 
-#include <boost/bind.hpp>
 #include <boost/log/core.hpp>
 #include <boost/log/expressions.hpp>
 #include <boost/log/trivial.hpp>
+#include <functional>
 #include <iostream>
+#include <memory>
 #include <msgpack/rpc/server.h>
 #include <msgpack/rpc/client.h>
 #include <signal.h>
@@ -32,7 +33,7 @@ public:
 
         rpc::session s = m_svr->get_session("127.0.0.1", 18811);
         rpc::future f = s.call(method, params.get<0>(), params.get<1>());
-        f.attach_callback( boost::bind(&callback, _1, req) );
+        f.attach_callback(std::bind(&callback, std::placeholders::_1, req));
     }
     
 private:
@@ -47,7 +48,7 @@ int main(int argc, char **argv)
     // run server {
     rpc::server svr;
 
-    svr.serve(boost::make_shared<myecho>());
+    svr.serve(std::make_shared<myecho>());
     svr.listen("0.0.0.0", 18811);
 
     svr.start(4);
@@ -57,7 +58,7 @@ int main(int argc, char **argv)
     // run pxocy server {
     rpc::server proxy;
 
-    proxy.serve(boost::make_shared<myproxy>(&proxy));
+    proxy.serve(std::make_shared<myproxy>(&proxy));
     proxy.listen("0.0.0.0", 18812);
 
     proxy.start(4);

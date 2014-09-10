@@ -20,6 +20,8 @@
 
 #include "types.h"
 
+#include <memory>
+
 namespace msgpack {
 namespace rpc {
 
@@ -38,7 +40,7 @@ public:
     virtual void send_data(auto_vreflife vbuf) = 0;
 };
 
-typedef boost::shared_ptr<message_sendable> shared_message_sendable;
+typedef std::shared_ptr<message_sendable> shared_message_sendable;
 
 
 }  // namespace rpc

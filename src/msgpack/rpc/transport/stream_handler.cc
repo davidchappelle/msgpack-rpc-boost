@@ -1,12 +1,7 @@
 #include "stream_handler.h"
 
-#include "../protocol.h"
-#include "../server_impl.h"
-#include "../session_impl.h"
-#include "../transport_impl.h"
-#include "../types.h"
-
 #include <boost/log/trivial.hpp>
+#include <functional>
 
 namespace msgpack {
 namespace rpc {
@@ -35,9 +30,8 @@ void stream_handler::start()
     m_pac->reserve_buffer(MSGPACK_RPC_STREAM_RESERVE_SIZE);
     m_socket.async_read_some(
         boost::asio::buffer(m_pac->buffer(), m_pac->buffer_capacity()),
-        m_strand.wrap(boost::bind(&stream_handler::on_read, shared_from_this(),
-            boost::asio::placeholders::error,
-            boost::asio::placeholders::bytes_transferred)));
+        m_strand.wrap(std::bind(&stream_handler::on_read, shared_from_this(),
+            std::placeholders::_1, std::placeholders::_2)));
 }
 
 void stream_handler::stop()

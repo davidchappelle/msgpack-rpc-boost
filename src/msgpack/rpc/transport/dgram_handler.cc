@@ -1,12 +1,7 @@
 #include "dgram_handler.h"
 
-#include "../protocol.h"
-#include "../server_impl.h"
-#include "../session_impl.h"
-#include "../transport_impl.h"
-#include "../types.h"
-
 #include <boost/log/trivial.hpp>
+#include <functional>
 
 namespace msgpack {
 namespace rpc {
@@ -15,7 +10,7 @@ using namespace boost::asio::ip;
 
 class response_sender : public message_sendable {
 public:
-    response_sender(boost::shared_ptr<dgram_handler> handler,
+    response_sender(std::shared_ptr<dgram_handler> handler,
         udp::endpoint& remote) : m_handler(handler), m_remote(remote) { }
     ~response_sender() { };
 
@@ -27,7 +22,7 @@ public:
     }
 
 private:
-    boost::shared_ptr<dgram_handler> m_handler;
+    std::shared_ptr<dgram_handler> m_handler;
     udp::endpoint m_remote;
 
 private:
@@ -50,15 +45,14 @@ void dgram_handler::start()
 {
     m_socket.async_receive_from(
         boost::asio::buffer(m_pac.buffer(), m_pac.buffer_capacity()), m_remote,
-        m_strand.wrap(boost::bind(&dgram_handler::on_read, shared_from_this(),
-            boost::asio::placeholders::error,
-            boost::asio::placeholders::bytes_transferred)));
+        m_strand.wrap(std::bind(&dgram_handler::on_read, shared_from_this(),
+            std::placeholders::_1, std::placeholders::_2)));
 }
 
-boost::shared_ptr<message_sendable>
+std::shared_ptr<message_sendable>
 dgram_handler::get_response_sender(udp::endpoint& ep)
 {
-    return boost::shared_ptr<message_sendable>(
+    return std::shared_ptr<message_sendable>(
             new response_sender(shared_from_this(), ep));
 }
 
@@ -80,10 +74,9 @@ void dgram_handler::on_read(const boost::system::error_code& err, size_t nbytes)
             m_socket.async_receive_from(
                 boost::asio::buffer(m_pac.buffer(), m_pac.buffer_capacity()),
                 m_remote,
-                m_strand.wrap(boost::bind(&dgram_handler::on_read,
+                m_strand.wrap(std::bind(&dgram_handler::on_read,
                     shared_from_this(),
-                    boost::asio::placeholders::error,
-                    boost::asio::placeholders::bytes_transferred)));
+                    std::placeholders::_1, std::placeholders::_2)));
             return;
         }
         catch(std::exception& e)

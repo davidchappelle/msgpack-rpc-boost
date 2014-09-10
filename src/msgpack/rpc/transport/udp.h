@@ -20,6 +20,8 @@
 
 #include "../transport.h"
 
+#include <memory>
+
 namespace msgpack {
 namespace rpc {
 

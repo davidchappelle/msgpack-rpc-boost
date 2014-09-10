@@ -8,6 +8,7 @@
 #include "../types.h"
 
 #include <boost/asio.hpp>
+#include <memory>
 
 namespace msgpack {
 namespace rpc {
@@ -15,7 +16,7 @@ namespace rpc {
 class closed_exception : public std::exception { };
 
 class dgram_handler :  public message_sendable,
-    public boost::enable_shared_from_this<dgram_handler>
+    public std::enable_shared_from_this<dgram_handler>
 {
 public:
     dgram_handler(loop lo);
@@ -26,7 +27,7 @@ public:
     void start();
     void on_read(const boost::system::error_code& err, size_t nbytes);
 
-    boost::shared_ptr<message_sendable>
+    std::shared_ptr<message_sendable>
         get_response_sender(boost::asio::ip::udp::endpoint& ep);
 
     // message_sendable

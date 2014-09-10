@@ -19,6 +19,8 @@
 #include "session_impl.h"
 #include "transport/tcp.h"
 
+#include <functional>
+
 namespace msgpack {
 namespace rpc {
 
@@ -61,7 +63,7 @@ static bool step_timeout(weak_session ws)
 
 void client::start_timeout()
 {
-    m_pimpl->get_loop()->add_timer(1, boost::bind(&step_timeout,
+    m_pimpl->get_loop()->add_timer(1, std::bind(&step_timeout,
         weak_session(session::m_pimpl)));
 }
 
