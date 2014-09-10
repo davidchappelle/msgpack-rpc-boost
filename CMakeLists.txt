@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 2.8)
 
 set(VERSION_MAJOR 0)
 set(VERSION_MINOR 2)
+set(VERSION "${VERSION_MAJOR}.${VERSION_MINOR}")
 set(BUILD_TESTS $ENV{BUILD_TESTS})
 
 ##########################################
