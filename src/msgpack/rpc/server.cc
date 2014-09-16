@@ -97,12 +97,12 @@ void server_impl::on_notify(
 // SERVER
 
 server::server(loop lo) :
-    session_pool(shared_session_pool(new server_impl(tcp_builder(), lo)))
+    session_pool(shared_session_pool(std::make_shared<server_impl>(tcp_builder(), lo)))
 {
 }
 
 server::server(const builder& b, loop lo) :
-    session_pool(shared_session_pool(new server_impl(b, lo)))
+    session_pool(shared_session_pool(std::make_shared<server_impl>(b, lo)))
 {
 }
 
