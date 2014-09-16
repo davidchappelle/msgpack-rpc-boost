@@ -27,6 +27,7 @@ class address
 {
 public:
     address();
+    address(const boost::asio::ip::address& ip, unsigned short port);
     address(const std::string& host, unsigned short port);
     address(const std::string& host, const std::string& service);
     address(const std::string& addr);  // hostname:port

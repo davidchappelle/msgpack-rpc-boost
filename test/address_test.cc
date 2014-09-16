@@ -27,5 +27,11 @@ int main(int argc, char* argv[])
     cout << "localhost:http == 127.0.0.1:7070" << endl;
     cout << (addr == addr3) << endl;
 
+    msgpack::rpc::address addr4(
+            boost::asio::ip::address::from_string("127.0.0.1"), 9000);
+    cout << "ip address : " << addr4.get_addr().to_string() << endl;
+    cout << "port : " << addr4.get_port() << endl;
+    cout << endl;
+
     return 0;
 }

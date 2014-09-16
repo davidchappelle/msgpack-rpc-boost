@@ -174,13 +174,13 @@ public:
     server_socket(shared_server svr);
     ~server_socket();
 
-    void listen(const address& addr);
+    boost::asio::ip::udp::endpoint listen(const address& addr);
 
     // dgram_handler interface
-    void on_request(msgid_t msgid, object method, object params, auto_zone z,
+    virtual void on_request(msgid_t msgid, object method, object params, auto_zone z,
                     boost::asio::ip::udp::endpoint& ep);
-    void on_response(msgid_t msgid, object method, object params, auto_zone z);
-    void on_notify(object method, object params, auto_zone z);
+    virtual void on_response(msgid_t msgid, object method, object params, auto_zone z);
+    virtual void on_notify(object method, object params, auto_zone z);
 
 private:
     weak_server m_svr;
@@ -196,12 +196,16 @@ public:
     server_transport(server_impl* svr, const address& addr);
     ~server_transport();
 
-    void close();
-    virtual int get_connection_num();
+    virtual void close();
+    virtual int get_connection_num() const;
+    virtual const address& get_local_endpoint() const;
 
 private:
     weak_server m_wsvr;
     std::shared_ptr<server_socket> m_conn;
+
+    // the local endpoint we are bound to
+    address m_local_endpoint;
 
 private:
     server_transport();
@@ -215,14 +219,17 @@ server_socket::server_socket(shared_server svr) :
 
 server_socket::~server_socket() { }
 
-void server_socket::listen(const address& addr)
+boost::asio::ip::udp::endpoint server_socket::listen(const address& addr)
 {
     boost::asio::ip::udp::endpoint ep(addr.get_addr(), addr.get_port());
 
     socket().open(boost::asio::ip::udp::v4());
     socket().set_option(boost::asio::ip::udp::socket::reuse_address(true));
     socket().bind(ep);
+
     start();
+
+    return socket().local_endpoint();
 }
 
 void server_socket::on_request(
@@ -259,7 +266,8 @@ server_transport::server_transport(server_impl* svr, const address& addr)
         std::static_pointer_cast<server_impl>(svr->shared_from_this()));
 
     m_conn.reset(new transport::udp::server_socket(m_wsvr.lock()));
-    m_conn->listen(addr);
+    boost::asio::ip::udp::endpoint lep = m_conn->listen(addr);
+    m_local_endpoint = address(lep.address(), lep.port());
 }
 
 server_transport::~server_transport()
@@ -271,9 +279,14 @@ void server_transport::close()
 {
 }
 
-int server_transport::get_connection_num()
+int server_transport::get_connection_num() const
 {
     throw std::runtime_error("not supported in udp");
+}
+
+const address& server_transport::get_local_endpoint() const
+{
+    return m_local_endpoint;
 }
 
 }  // namespace udp

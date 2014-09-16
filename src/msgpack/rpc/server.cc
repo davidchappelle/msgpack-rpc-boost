@@ -50,14 +50,28 @@ void server_impl::close()
     m_stran.reset();
 }
 
-int server_impl::get_connection_num()
+const address& server_impl::get_local_endpoint() const
 {
     if (m_stran.get())
+    {
+        return m_stran->get_local_endpoint();
+    }
+
+    static address invalid("0.0.0.0", 0);
+    return invalid;
+}
+
+int server_impl::get_connection_num() const
+{
+    if (m_stran.get())
+    {
         return m_stran->get_connection_num();
+    }
+
     return 0;
 }
 
-int server_impl::get_request_num()
+int server_impl::get_request_num() const
 {
     return 0;  // works sync
 }
@@ -124,12 +138,17 @@ void server::listen(const std::string& host, uint16_t port)
     listen(address(host, port));
 }
 
-int server::get_connection_num()
+const address& server::get_local_endpoint() const
+{
+    return static_cast<server_impl*>(m_pimpl.get())->get_local_endpoint();
+}
+
+int server::get_connection_num() const
 {
     return static_cast<server_impl*>(m_pimpl.get())->get_connection_num();
 }
 
-int server::get_request_num()
+int server::get_request_num() const
 {
     return static_cast<server_impl*>(m_pimpl.get())->get_request_num();
 }

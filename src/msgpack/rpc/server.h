@@ -46,8 +46,9 @@ public:
     void listen(const address& addr);
     void listen(const std::string& host, uint16_t port);
 
-    int get_connection_num();
-    int get_request_num();
+    const address& get_local_endpoint() const;
+    int get_connection_num() const;
+    int get_request_num() const;
 
     class base;
 

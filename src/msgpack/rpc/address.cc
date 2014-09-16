@@ -29,6 +29,12 @@ address::address()
 {
 }
 
+address::address(const boost::asio::ip::address& ip, unsigned short port) :
+    m_address(ip),
+    m_port(port)
+{
+}
+
 address::address(const std::string& host, unsigned short port_num)
 {
     resolve(host, boost::lexical_cast<std::string>(port_num));

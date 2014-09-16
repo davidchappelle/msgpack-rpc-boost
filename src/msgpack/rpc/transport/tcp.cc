@@ -306,18 +306,21 @@ public:
     server_transport(server_impl* svr, const address& addr);
     ~server_transport();
 
-    void close();
     void start_accept();
     void on_accept(const boost::system::error_code& error);
     void on_system_error(std::shared_ptr<server_socket> conn);
 
-    virtual int get_connection_num();
+    virtual void close();
+    virtual int get_connection_num() const;
+    virtual const address& get_local_endpoint() const;
 
 private:
     weak_server m_wsvr;
     // acceptor used to listen for incoming connections.
     boost::asio::ip::tcp::acceptor m_acceptor;
     std::shared_ptr<server_socket> m_conn;
+    // the local endpoint we are bound to
+    address m_local_endpoint;
     // the managed connections
     std::set<std::shared_ptr<server_socket> > m_connections;
     boost::mutex m_mutex;
@@ -387,6 +390,10 @@ server_transport::server_transport(server_impl* svr, const address& addr) :
     m_acceptor.bind(ep);
     m_acceptor.listen();
 
+    // record the local endpoint we are bound to
+    auto lep = m_acceptor.local_endpoint();
+    m_local_endpoint = address(lep.address(), lep.port());
+
     start_accept();
 }
 
@@ -433,9 +440,14 @@ void server_transport::on_accept(const boost::system::error_code& err)
     start_accept();
 }
 
-int server_transport::get_connection_num()
+int server_transport::get_connection_num() const
 {
     return m_connections.size();
+}
+
+const address& server_transport::get_local_endpoint() const
+{
+    return m_local_endpoint;
 }
 
 }  // namespace tcp

@@ -39,7 +39,8 @@ public:
     server_transport() { }
     virtual ~server_transport() { }
     virtual void close() = 0;
-    virtual int get_connection_num() = 0;
+    virtual int get_connection_num() const = 0;
+    virtual const address& get_local_endpoint() const = 0;
 };
 
 

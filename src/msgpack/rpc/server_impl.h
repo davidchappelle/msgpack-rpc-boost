@@ -19,6 +19,7 @@
 #define MSGPACK_RPC_SERVER_IMPL_H__
 
 #include "server.h"
+#include "address.h"
 #include "session_pool_impl.h"
 
 #include <memory>
@@ -38,8 +39,9 @@ public:
     void listen(const listener& l);
     void close();
 
-    int get_connection_num();
-    int get_request_num();
+    const address& get_local_endpoint() const;
+    int get_connection_num() const;
+    int get_request_num() const;
 
 public:
     void on_request(shared_message_sendable ms, msgid_t msgid,
