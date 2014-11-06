@@ -27,10 +27,13 @@ boost::asio::io_service& loop_impl::io_service()
 
 void loop_impl::start(size_t num)
 {
-    if (is_running()) {
-        throw std::runtime_error("loop is already running");
+    if (num > 0)
+    {
+        if (is_running()) {
+            throw std::runtime_error("loop is already running");
+        }
+        add_worker(num);
     }
-    add_worker(num);
 }
 
 void loop_impl::run(size_t num)
