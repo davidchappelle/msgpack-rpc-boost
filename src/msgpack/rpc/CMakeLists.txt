@@ -29,22 +29,13 @@ ADD_LIBRARY(mprpc-static STATIC
     ${MSGPACK_RPC_TRANSPORT_SRC}
 )
 
-ADD_LIBRARY(mprpc-shared SHARED
+ADD_LIBRARY(mprpc-shared SHARED 
     ${MSGPACK_RPC_SRC}
     ${MSGPACK_RPC_TRANSPORT_SRC}
 )
 
 SET_TARGET_PROPERTIES(mprpc-static PROPERTIES OUTPUT_NAME mprpc)
 SET_TARGET_PROPERTIES(mprpc-shared PROPERTIES OUTPUT_NAME mprpc)
-
-#-----------------------------------------------------------------------------
-# To fix compilation problem: relocation R_X86_64_32 against `a local symbol' can not be
-# used when making a shared object; recompile with -fPIC
-# See http://www.cmake.org/pipermail/cmake/2007-May/014350.html
-#
-IF(CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64")
-  SET_TARGET_PROPERTIES(mprpc-shared PROPERTIES COMPILE_FLAGS "-fPIC")
-ENDIF(CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64")
 
 ##########################################
 
