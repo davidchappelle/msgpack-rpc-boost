@@ -24,18 +24,17 @@ SET(MSGPACK_RPC_TRANSPORT_SRC
     transport/dgram_handler.cc
 )
 
-ADD_LIBRARY(mprpc-static STATIC
-    ${MSGPACK_RPC_SRC}
-    ${MSGPACK_RPC_TRANSPORT_SRC}
-)
-
-ADD_LIBRARY(mprpc-shared SHARED 
-    ${MSGPACK_RPC_SRC}
-    ${MSGPACK_RPC_TRANSPORT_SRC}
-)
-
-SET_TARGET_PROPERTIES(mprpc-static PROPERTIES OUTPUT_NAME mprpc)
-SET_TARGET_PROPERTIES(mprpc-shared PROPERTIES OUTPUT_NAME mprpc)
+IF(shared)
+    ADD_LIBRARY(mprpc SHARED
+        ${MSGPACK_RPC_SRC}
+        ${MSGPACK_RPC_TRANSPORT_SRC}
+    )
+ELSE()
+    ADD_LIBRARY(mprpc STATIC
+        ${MSGPACK_RPC_SRC}
+        ${MSGPACK_RPC_TRANSPORT_SRC}
+    )
+ENDIF()
 
 ##########################################
 
@@ -65,7 +64,7 @@ SET(MPRPC_TRANSPORT_HEADERS
 
 INSTALL(FILES ${MPRPC_HEADERS} DESTINATION include/msgpack/rpc)
 INSTALL(FILES ${MPRPC_TRANSPORT_HEADERS} DESTINATION include/msgpack/rpc/transport)
-INSTALL(TARGETS mprpc-static mprpc-shared
+INSTALL(TARGETS mprpc
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib
 )
