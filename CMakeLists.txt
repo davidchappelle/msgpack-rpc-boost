@@ -11,18 +11,19 @@ set(CMAKE_CXX_FLAGS "-std=c++11 -Wall ${CMAKE_CXX_FLAGS}")
 
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src)
 
-option(Boost_USE_STATIC_LIBS "Build with static Boost libraries." OFF)
-option(MessagePack_USE_STATIC_LIBS "Build with static MessagePack libraries." OFF)
+option(shared "build msgpack-rpc-boost as a shared library" ON)
 
-find_package (Boost REQUIRED COMPONENTS COMPONENTS system thread filesystem regex log)
-
-if(NOT Boost_USE_STATIC_LIBS)
+if(NOT shared)
+    set(Boost_USE_STATIC_LIBS ON)
+else()
     add_definitions(-DBOOST_ALL_DYN_LINK)
 endif()
 
+find_package (Boost REQUIRED COMPONENTS COMPONENTS system thread filesystem regex log)
+
 find_package (OpenSSL QUIET)
 
-if(MessagePack_USE_STATIC_LIBS)
+if(NOT shared)
     set( _messagepack_ORIG_CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_FIND_LIBRARY_SUFFIXES})
     set(CMAKE_FIND_LIBRARY_SUFFIXES .a)
 endif()
@@ -36,7 +37,7 @@ if (MSGPACK_INCLUDE_DIR-NOTFOUND)
     message (FATAL_ERROR "The msgpack header was not found on your system.")
 endif (MSGPACK_INCLUDE_DIR-NOTFOUND)
 
-if(MessagePack_USE_STATIC_LIBS)
+if(NOT shared)
     set(CMAKE_FIND_LIBRARY_SUFFIXES ${_messagepack_ORIG_CMAKE_FIND_LIBRARY_SUFFIXES})
 endif()
 
