@@ -20,7 +20,7 @@ stream_handler::stream_handler(loop lo) :
     m_socket(lo->io_service()),
     m_strand(lo->io_service())
 {
-    m_pac.reset(new unpacker(MSGPACK_RPC_STREAM_BUFFER_SIZE));
+    m_pac.reset(new unpacker());
 }
 
 stream_handler::~stream_handler() { }

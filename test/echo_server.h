@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <msgpack/rpc/server.h>
+#include <tuple>
 
 namespace rpc {
 	using namespace msgpack;
@@ -19,27 +20,27 @@ public:
 		req.method().convert(&method);
 
 		if(method == "add") {
-			msgpack::type::tuple<int, int> params;
+			std::tuple<int, int> params;
 			req.params().convert(&params);
 			add(req, params.get<0>(), params.get<1>());
 
 		} else if(method == "echo") {
-			msgpack::type::tuple<std::string> params;
+			std::tuple<std::string> params;
 			req.params().convert(&params);
 			echo(req, params.get<0>());
 
 		} else if(method == "echo_huge") {
-			msgpack::type::tuple<msgpack::type::raw_ref> params;
+			std::tuple<msgpack::type::raw_ref> params;
 			req.params().convert(&params);
 			echo_huge(req, params.get<0>());
 
 		} else if(method == "err") {
-			msgpack::type::tuple<> params;
+			std::tuple<> params;
 			req.params().convert(&params);
 			err(req);
 
 		} else if(method == "oneway") {
-			msgpack::type::tuple<std::string> params;
+			std::tuple<std::string> params;
 			req.params().convert(&params);
 			oneway(req, params.get<0>());
 

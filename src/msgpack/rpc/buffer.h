@@ -45,8 +45,8 @@ struct buffer {
 template <typename Stream>
 inline packer<Stream>& operator<< (packer<Stream>& o, const buffer& v)
 {
-    o.pack_raw(v.m_size);
-    o.pack_raw_body(v.m_ptr, v.m_size);
+    o.pack_bin(v.m_size);
+    o.pack_bin_body(v.m_ptr, v.m_size);
     return o;
 }
 
@@ -54,9 +54,9 @@ buffer& operator>> (object o, buffer& v);
 
 inline void operator<< (object& o, const buffer& v)
 {
-    o.type = type::RAW;
-    o.via.raw.ptr = v.m_ptr;
-    o.via.raw.size = v.m_size;
+    o.type = type::BIN;
+    o.via.bin.ptr = v.m_ptr;
+    o.via.bin.size = v.m_size;
 }
 
 inline void operator<< (object::with_zone& o, const buffer& v)

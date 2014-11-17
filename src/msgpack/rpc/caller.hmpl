@@ -21,6 +21,7 @@
 #include "types.h"
 #include "future.h"
 #include <string>
+#include <tuple>
 
 namespace msgpack {
 namespace rpc {
@@ -42,7 +43,7 @@ public:
 			[%lifetype%] msglife,  %>if lifetype
 			[%gen.args_const_ref%])
 	{
-		type::tuple<[%gen.types_const_ref%]> params([%gen.params%]);
+		std::tuple<[%gen.types_const_ref%]> params([%gen.params%]);
 		shared_zone  slife(msglife.release());   %>if lifetype == "auto_zone"
 		shared_zone& slife = msglife;            %>if lifetype == "shared_zone"
 		shared_zone  slife;                      %>unless lifetype
@@ -68,7 +69,7 @@ public:
 
 	future call(const std::string& name)
 	{
-		type::tuple<> params;
+		std::tuple<> params;
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, shared_zone());
 	}
@@ -81,7 +82,7 @@ public:
 
 	void notify(const std::string& name)
 	{
-		type::tuple<> params;
+		std::tuple<> params;
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, shared_zone());
 	}

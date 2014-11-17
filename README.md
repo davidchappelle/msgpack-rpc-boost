@@ -37,7 +37,7 @@ Configure and install in the usual way:
 
     #include <msgpack/rpc/client.h>
     #include <iostream>
-    
+
     int main(void)
     {
     	msgpack::rpc::client c("127.0.0.1", 9090);
@@ -49,39 +49,39 @@ Configure and install in the usual way:
 ### Simple server
 
     #include <msgpack/rpc/server.h>
-    
+
     class myserver : public msgpack::rpc::server::base {
     public:
     	void add(msgpack::rpc::request req, int a1, int a2)
     	{
     		req.result(a1 + a2);
     	}
-    
+
     public:
     	void dispatch(msgpack::rpc::request req)
     	try {
     		std::string method;
     		req.method().convert(&method);
-    
+
     		if(method == "add") {
-    			msgpack::type::tuple<int, int> params;
+                       std::tuple<int, int> params;
     			req.params().convert(&params);
     			add(req, params.get<0>(), params.get<1>());
-    
+
     		} else {
     			req.error(msgpack::rpc::NO_METHOD_ERROR);
     		}
-    
+
     	} catch (msgpack::type_error& e) {
     		req.error(msgpack::rpc::ARGUMENT_ERROR);
     		return;
-    
+
     	} catch (std::exception& e) {
     		req.error(std::string(e.what()));
     		return;
     	}
     };
-    
+
     int main(void)
     {
     	myserver svr;
@@ -96,13 +96,13 @@ IDL parser and code generator is under development. It will resolve the problem 
 ## License
 
     Copyright (C) 2008-2010 FURUHASHI Sadayuki <frsyuki _at_ users.sourceforge.jp>
-    
+
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
        You may obtain a copy of the License at
-    
+
            http://www.apache.org/licenses/LICENSE-2.0
-    
+
        Unless required by applicable law or agreed to in writing, software
        distributed under the License is distributed on an "AS IS" BASIS,
        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.

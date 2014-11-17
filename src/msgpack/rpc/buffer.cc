@@ -17,11 +17,11 @@ namespace rpc {
 
 buffer& operator>> (object o, buffer& v)
 {
-    if (o.type != type::RAW) {
+    if (o.type != type::BIN) {
         throw type_error();
     }
     // memory copy occurs
-    v.wrap(o.via.raw.ptr, o.via.raw.size);
+    v.wrap(o.via.bin.ptr, o.via.bin.size);
     v.make_unwrapped();
     return v;
 }
@@ -33,7 +33,7 @@ void buffer::wrap(const char* p, uint32_t s)
     m_size = s;
     m_ptr = p;
 }
-    
+
 void buffer::make_unwrapped()
 {
     if (s_ptr.get())

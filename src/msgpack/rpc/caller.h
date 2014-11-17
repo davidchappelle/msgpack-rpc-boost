@@ -21,6 +21,7 @@
 #include "types.h"
 #include "future.h"
 #include <string>
+#include <tuple>
 
 namespace msgpack {
 namespace rpc {
@@ -39,7 +40,7 @@ public:
 
 	future call(const std::string& name)
 	{
-		type::tuple<> params;
+		std::tuple<> params;
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, shared_zone());
 	}
@@ -48,7 +49,7 @@ public:
 			auto_zone msglife,
 			const A1& a1)
 	{
-		type::tuple<const A1&> params(a1);
+		std::tuple<const A1&> params(a1);
 		shared_zone  slife(msglife.release());
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -58,7 +59,7 @@ public:
 			auto_zone msglife,
 			const A1& a1, const A2& a2)
 	{
-		type::tuple<const A1&, const A2&> params(a1, a2);
+		std::tuple<const A1&, const A2&> params(a1, a2);
 		shared_zone  slife(msglife.release());
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -68,7 +69,7 @@ public:
 			auto_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3)
 	{
-		type::tuple<const A1&, const A2&, const A3&> params(a1, a2, a3);
+		std::tuple<const A1&, const A2&, const A3&> params(a1, a2, a3);
 		shared_zone  slife(msglife.release());
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -78,7 +79,7 @@ public:
 			auto_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&> params(a1, a2, a3, a4);
+		std::tuple<const A1&, const A2&, const A3&, const A4&> params(a1, a2, a3, a4);
 		shared_zone  slife(msglife.release());
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -88,7 +89,7 @@ public:
 			auto_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&> params(a1, a2, a3, a4, a5);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&> params(a1, a2, a3, a4, a5);
 		shared_zone  slife(msglife.release());
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -98,7 +99,7 @@ public:
 			auto_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&> params(a1, a2, a3, a4, a5, a6);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&> params(a1, a2, a3, a4, a5, a6);
 		shared_zone  slife(msglife.release());
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -108,7 +109,7 @@ public:
 			auto_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&> params(a1, a2, a3, a4, a5, a6, a7);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&> params(a1, a2, a3, a4, a5, a6, a7);
 		shared_zone  slife(msglife.release());
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -118,7 +119,7 @@ public:
 			auto_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&> params(a1, a2, a3, a4, a5, a6, a7, a8);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&> params(a1, a2, a3, a4, a5, a6, a7, a8);
 		shared_zone  slife(msglife.release());
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -128,7 +129,7 @@ public:
 			auto_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9);
 		shared_zone  slife(msglife.release());
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -138,7 +139,7 @@ public:
 			auto_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10);
 		shared_zone  slife(msglife.release());
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -148,7 +149,7 @@ public:
 			auto_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11);
 		shared_zone  slife(msglife.release());
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -158,7 +159,7 @@ public:
 			auto_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12);
 		shared_zone  slife(msglife.release());
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -168,7 +169,7 @@ public:
 			auto_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12, const A13& a13)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13);
 		shared_zone  slife(msglife.release());
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -178,7 +179,7 @@ public:
 			auto_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12, const A13& a13, const A14& a14)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14);
 		shared_zone  slife(msglife.release());
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -188,7 +189,7 @@ public:
 			auto_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12, const A13& a13, const A14& a14, const A15& a15)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&, const A15&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&, const A15&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15);
 		shared_zone  slife(msglife.release());
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -198,7 +199,7 @@ public:
 			auto_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12, const A13& a13, const A14& a14, const A15& a15, const A16& a16)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&, const A15&, const A16&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&, const A15&, const A16&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16);
 		shared_zone  slife(msglife.release());
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -208,7 +209,7 @@ public:
 			shared_zone msglife,
 			const A1& a1)
 	{
-		type::tuple<const A1&> params(a1);
+		std::tuple<const A1&> params(a1);
 		shared_zone& slife = msglife;
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -218,7 +219,7 @@ public:
 			shared_zone msglife,
 			const A1& a1, const A2& a2)
 	{
-		type::tuple<const A1&, const A2&> params(a1, a2);
+		std::tuple<const A1&, const A2&> params(a1, a2);
 		shared_zone& slife = msglife;
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -228,7 +229,7 @@ public:
 			shared_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3)
 	{
-		type::tuple<const A1&, const A2&, const A3&> params(a1, a2, a3);
+		std::tuple<const A1&, const A2&, const A3&> params(a1, a2, a3);
 		shared_zone& slife = msglife;
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -238,7 +239,7 @@ public:
 			shared_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&> params(a1, a2, a3, a4);
+		std::tuple<const A1&, const A2&, const A3&, const A4&> params(a1, a2, a3, a4);
 		shared_zone& slife = msglife;
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -248,7 +249,7 @@ public:
 			shared_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&> params(a1, a2, a3, a4, a5);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&> params(a1, a2, a3, a4, a5);
 		shared_zone& slife = msglife;
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -258,7 +259,7 @@ public:
 			shared_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&> params(a1, a2, a3, a4, a5, a6);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&> params(a1, a2, a3, a4, a5, a6);
 		shared_zone& slife = msglife;
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -268,7 +269,7 @@ public:
 			shared_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&> params(a1, a2, a3, a4, a5, a6, a7);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&> params(a1, a2, a3, a4, a5, a6, a7);
 		shared_zone& slife = msglife;
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -278,7 +279,7 @@ public:
 			shared_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&> params(a1, a2, a3, a4, a5, a6, a7, a8);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&> params(a1, a2, a3, a4, a5, a6, a7, a8);
 		shared_zone& slife = msglife;
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -288,7 +289,7 @@ public:
 			shared_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9);
 		shared_zone& slife = msglife;
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -298,7 +299,7 @@ public:
 			shared_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10);
 		shared_zone& slife = msglife;
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -308,7 +309,7 @@ public:
 			shared_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11);
 		shared_zone& slife = msglife;
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -318,7 +319,7 @@ public:
 			shared_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12);
 		shared_zone& slife = msglife;
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -328,7 +329,7 @@ public:
 			shared_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12, const A13& a13)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13);
 		shared_zone& slife = msglife;
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -338,7 +339,7 @@ public:
 			shared_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12, const A13& a13, const A14& a14)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14);
 		shared_zone& slife = msglife;
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -348,7 +349,7 @@ public:
 			shared_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12, const A13& a13, const A14& a14, const A15& a15)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&, const A15&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&, const A15&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15);
 		shared_zone& slife = msglife;
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -358,7 +359,7 @@ public:
 			shared_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12, const A13& a13, const A14& a14, const A15& a15, const A16& a16)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&, const A15&, const A16&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&, const A15&, const A16&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16);
 		shared_zone& slife = msglife;
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -367,7 +368,7 @@ public:
 	future call(const std::string& name,
 			const A1& a1)
 	{
-		type::tuple<const A1&> params(a1);
+		std::tuple<const A1&> params(a1);
 		shared_zone  slife;
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -376,7 +377,7 @@ public:
 	future call(const std::string& name,
 			const A1& a1, const A2& a2)
 	{
-		type::tuple<const A1&, const A2&> params(a1, a2);
+		std::tuple<const A1&, const A2&> params(a1, a2);
 		shared_zone  slife;
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -385,7 +386,7 @@ public:
 	future call(const std::string& name,
 			const A1& a1, const A2& a2, const A3& a3)
 	{
-		type::tuple<const A1&, const A2&, const A3&> params(a1, a2, a3);
+		std::tuple<const A1&, const A2&, const A3&> params(a1, a2, a3);
 		shared_zone  slife;
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -394,7 +395,7 @@ public:
 	future call(const std::string& name,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&> params(a1, a2, a3, a4);
+		std::tuple<const A1&, const A2&, const A3&, const A4&> params(a1, a2, a3, a4);
 		shared_zone  slife;
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -403,7 +404,7 @@ public:
 	future call(const std::string& name,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&> params(a1, a2, a3, a4, a5);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&> params(a1, a2, a3, a4, a5);
 		shared_zone  slife;
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -412,7 +413,7 @@ public:
 	future call(const std::string& name,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&> params(a1, a2, a3, a4, a5, a6);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&> params(a1, a2, a3, a4, a5, a6);
 		shared_zone  slife;
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -421,7 +422,7 @@ public:
 	future call(const std::string& name,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&> params(a1, a2, a3, a4, a5, a6, a7);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&> params(a1, a2, a3, a4, a5, a6, a7);
 		shared_zone  slife;
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -430,7 +431,7 @@ public:
 	future call(const std::string& name,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&> params(a1, a2, a3, a4, a5, a6, a7, a8);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&> params(a1, a2, a3, a4, a5, a6, a7, a8);
 		shared_zone  slife;
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -439,7 +440,7 @@ public:
 	future call(const std::string& name,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9);
 		shared_zone  slife;
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -448,7 +449,7 @@ public:
 	future call(const std::string& name,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10);
 		shared_zone  slife;
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -457,7 +458,7 @@ public:
 	future call(const std::string& name,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11);
 		shared_zone  slife;
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -466,7 +467,7 @@ public:
 	future call(const std::string& name,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12);
 		shared_zone  slife;
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -475,7 +476,7 @@ public:
 	future call(const std::string& name,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12, const A13& a13)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13);
 		shared_zone  slife;
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -484,7 +485,7 @@ public:
 	future call(const std::string& name,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12, const A13& a13, const A14& a14)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14);
 		shared_zone  slife;
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -493,7 +494,7 @@ public:
 	future call(const std::string& name,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12, const A13& a13, const A14& a14, const A15& a15)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&, const A15&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&, const A15&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15);
 		shared_zone  slife;
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -502,7 +503,7 @@ public:
 	future call(const std::string& name,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12, const A13& a13, const A14& a14, const A15& a15, const A16& a16)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&, const A15&, const A16&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&, const A15&, const A16&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16);
 		shared_zone  slife;
 		return static_cast<IMPL*>(this)->send_request(
 				name, params, slife);
@@ -536,7 +537,7 @@ public:
 
 	void notify(const std::string& name)
 	{
-		type::tuple<> params;
+		std::tuple<> params;
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, shared_zone());
 	}
@@ -545,7 +546,7 @@ public:
 			auto_zone msglife,
 			const A1& a1)
 	{
-		type::tuple<const A1&> params(a1);
+		std::tuple<const A1&> params(a1);
 		shared_zone  slife(msglife.release());
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -555,7 +556,7 @@ public:
 			auto_zone msglife,
 			const A1& a1, const A2& a2)
 	{
-		type::tuple<const A1&, const A2&> params(a1, a2);
+		std::tuple<const A1&, const A2&> params(a1, a2);
 		shared_zone  slife(msglife.release());
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -565,7 +566,7 @@ public:
 			auto_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3)
 	{
-		type::tuple<const A1&, const A2&, const A3&> params(a1, a2, a3);
+		std::tuple<const A1&, const A2&, const A3&> params(a1, a2, a3);
 		shared_zone  slife(msglife.release());
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -575,7 +576,7 @@ public:
 			auto_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&> params(a1, a2, a3, a4);
+		std::tuple<const A1&, const A2&, const A3&, const A4&> params(a1, a2, a3, a4);
 		shared_zone  slife(msglife.release());
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -585,7 +586,7 @@ public:
 			auto_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&> params(a1, a2, a3, a4, a5);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&> params(a1, a2, a3, a4, a5);
 		shared_zone  slife(msglife.release());
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -595,7 +596,7 @@ public:
 			auto_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&> params(a1, a2, a3, a4, a5, a6);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&> params(a1, a2, a3, a4, a5, a6);
 		shared_zone  slife(msglife.release());
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -605,7 +606,7 @@ public:
 			auto_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&> params(a1, a2, a3, a4, a5, a6, a7);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&> params(a1, a2, a3, a4, a5, a6, a7);
 		shared_zone  slife(msglife.release());
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -615,7 +616,7 @@ public:
 			auto_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&> params(a1, a2, a3, a4, a5, a6, a7, a8);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&> params(a1, a2, a3, a4, a5, a6, a7, a8);
 		shared_zone  slife(msglife.release());
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -625,7 +626,7 @@ public:
 			auto_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9);
 		shared_zone  slife(msglife.release());
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -635,7 +636,7 @@ public:
 			auto_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10);
 		shared_zone  slife(msglife.release());
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -645,7 +646,7 @@ public:
 			auto_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11);
 		shared_zone  slife(msglife.release());
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -655,7 +656,7 @@ public:
 			auto_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12);
 		shared_zone  slife(msglife.release());
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -665,7 +666,7 @@ public:
 			auto_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12, const A13& a13)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13);
 		shared_zone  slife(msglife.release());
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -675,7 +676,7 @@ public:
 			auto_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12, const A13& a13, const A14& a14)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14);
 		shared_zone  slife(msglife.release());
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -685,7 +686,7 @@ public:
 			auto_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12, const A13& a13, const A14& a14, const A15& a15)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&, const A15&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&, const A15&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15);
 		shared_zone  slife(msglife.release());
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -695,7 +696,7 @@ public:
 			auto_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12, const A13& a13, const A14& a14, const A15& a15, const A16& a16)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&, const A15&, const A16&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&, const A15&, const A16&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16);
 		shared_zone  slife(msglife.release());
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -705,7 +706,7 @@ public:
 			shared_zone msglife,
 			const A1& a1)
 	{
-		type::tuple<const A1&> params(a1);
+		std::tuple<const A1&> params(a1);
 		shared_zone& slife = msglife;
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -715,7 +716,7 @@ public:
 			shared_zone msglife,
 			const A1& a1, const A2& a2)
 	{
-		type::tuple<const A1&, const A2&> params(a1, a2);
+		std::tuple<const A1&, const A2&> params(a1, a2);
 		shared_zone& slife = msglife;
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -725,7 +726,7 @@ public:
 			shared_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3)
 	{
-		type::tuple<const A1&, const A2&, const A3&> params(a1, a2, a3);
+		std::tuple<const A1&, const A2&, const A3&> params(a1, a2, a3);
 		shared_zone& slife = msglife;
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -735,7 +736,7 @@ public:
 			shared_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&> params(a1, a2, a3, a4);
+		std::tuple<const A1&, const A2&, const A3&, const A4&> params(a1, a2, a3, a4);
 		shared_zone& slife = msglife;
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -745,7 +746,7 @@ public:
 			shared_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&> params(a1, a2, a3, a4, a5);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&> params(a1, a2, a3, a4, a5);
 		shared_zone& slife = msglife;
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -755,7 +756,7 @@ public:
 			shared_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&> params(a1, a2, a3, a4, a5, a6);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&> params(a1, a2, a3, a4, a5, a6);
 		shared_zone& slife = msglife;
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -765,7 +766,7 @@ public:
 			shared_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&> params(a1, a2, a3, a4, a5, a6, a7);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&> params(a1, a2, a3, a4, a5, a6, a7);
 		shared_zone& slife = msglife;
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -775,7 +776,7 @@ public:
 			shared_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&> params(a1, a2, a3, a4, a5, a6, a7, a8);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&> params(a1, a2, a3, a4, a5, a6, a7, a8);
 		shared_zone& slife = msglife;
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -785,7 +786,7 @@ public:
 			shared_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9);
 		shared_zone& slife = msglife;
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -795,7 +796,7 @@ public:
 			shared_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10);
 		shared_zone& slife = msglife;
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -805,7 +806,7 @@ public:
 			shared_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11);
 		shared_zone& slife = msglife;
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -815,7 +816,7 @@ public:
 			shared_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12);
 		shared_zone& slife = msglife;
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -825,7 +826,7 @@ public:
 			shared_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12, const A13& a13)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13);
 		shared_zone& slife = msglife;
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -835,7 +836,7 @@ public:
 			shared_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12, const A13& a13, const A14& a14)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14);
 		shared_zone& slife = msglife;
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -845,7 +846,7 @@ public:
 			shared_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12, const A13& a13, const A14& a14, const A15& a15)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&, const A15&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&, const A15&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15);
 		shared_zone& slife = msglife;
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -855,7 +856,7 @@ public:
 			shared_zone msglife,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12, const A13& a13, const A14& a14, const A15& a15, const A16& a16)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&, const A15&, const A16&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&, const A15&, const A16&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16);
 		shared_zone& slife = msglife;
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -864,7 +865,7 @@ public:
 	void notify(const std::string& name,
 			const A1& a1)
 	{
-		type::tuple<const A1&> params(a1);
+		std::tuple<const A1&> params(a1);
 		shared_zone  slife;
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -873,7 +874,7 @@ public:
 	void notify(const std::string& name,
 			const A1& a1, const A2& a2)
 	{
-		type::tuple<const A1&, const A2&> params(a1, a2);
+		std::tuple<const A1&, const A2&> params(a1, a2);
 		shared_zone  slife;
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -882,7 +883,7 @@ public:
 	void notify(const std::string& name,
 			const A1& a1, const A2& a2, const A3& a3)
 	{
-		type::tuple<const A1&, const A2&, const A3&> params(a1, a2, a3);
+		std::tuple<const A1&, const A2&, const A3&> params(a1, a2, a3);
 		shared_zone  slife;
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -891,7 +892,7 @@ public:
 	void notify(const std::string& name,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&> params(a1, a2, a3, a4);
+		std::tuple<const A1&, const A2&, const A3&, const A4&> params(a1, a2, a3, a4);
 		shared_zone  slife;
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -900,7 +901,7 @@ public:
 	void notify(const std::string& name,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&> params(a1, a2, a3, a4, a5);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&> params(a1, a2, a3, a4, a5);
 		shared_zone  slife;
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -909,7 +910,7 @@ public:
 	void notify(const std::string& name,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&> params(a1, a2, a3, a4, a5, a6);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&> params(a1, a2, a3, a4, a5, a6);
 		shared_zone  slife;
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -918,7 +919,7 @@ public:
 	void notify(const std::string& name,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&> params(a1, a2, a3, a4, a5, a6, a7);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&> params(a1, a2, a3, a4, a5, a6, a7);
 		shared_zone  slife;
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -927,7 +928,7 @@ public:
 	void notify(const std::string& name,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&> params(a1, a2, a3, a4, a5, a6, a7, a8);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&> params(a1, a2, a3, a4, a5, a6, a7, a8);
 		shared_zone  slife;
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -936,7 +937,7 @@ public:
 	void notify(const std::string& name,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9);
 		shared_zone  slife;
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -945,7 +946,7 @@ public:
 	void notify(const std::string& name,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10);
 		shared_zone  slife;
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -954,7 +955,7 @@ public:
 	void notify(const std::string& name,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11);
 		shared_zone  slife;
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -963,7 +964,7 @@ public:
 	void notify(const std::string& name,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12);
 		shared_zone  slife;
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -972,7 +973,7 @@ public:
 	void notify(const std::string& name,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12, const A13& a13)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13);
 		shared_zone  slife;
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -981,7 +982,7 @@ public:
 	void notify(const std::string& name,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12, const A13& a13, const A14& a14)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14);
 		shared_zone  slife;
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -990,7 +991,7 @@ public:
 	void notify(const std::string& name,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12, const A13& a13, const A14& a14, const A15& a15)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&, const A15&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&, const A15&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15);
 		shared_zone  slife;
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);
@@ -999,7 +1000,7 @@ public:
 	void notify(const std::string& name,
 			const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12, const A13& a13, const A14& a14, const A15& a15, const A16& a16)
 	{
-		type::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&, const A15&, const A16&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16);
+		std::tuple<const A1&, const A2&, const A3&, const A4&, const A5&, const A6&, const A7&, const A8&, const A9&, const A10&, const A11&, const A12&, const A13&, const A14&, const A15&, const A16&> params(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16);
 		shared_zone  slife;
 		return static_cast<IMPL*>(this)->send_notify(
 				name, params, slife);

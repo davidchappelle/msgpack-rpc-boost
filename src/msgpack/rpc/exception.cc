@@ -39,12 +39,12 @@ void throw_exception(future* f)
 {
     object err = f->error();
 
-    if (err.type == msgpack::type::RAW &&
-            err.via.raw.ptr == TIMEOUT_ERROR_PTR) {
+    if (err.type == msgpack::type::BIN &&
+            err.via.bin.ptr == TIMEOUT_ERROR_PTR) {
         throw timeout_error();
 
-    } else if(err.type == msgpack::type::RAW &&
-            err.via.raw.ptr == CONNECT_ERROR_PTR) {
+    } else if(err.type == msgpack::type::BIN &&
+            err.via.bin.ptr == CONNECT_ERROR_PTR) {
         throw connect_error();
 
     } else if(err.type == msgpack::type::POSITIVE_INTEGER &&

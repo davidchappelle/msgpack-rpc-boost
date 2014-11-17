@@ -33,7 +33,7 @@ private:
 // datagram Hanlder
 
 dgram_handler::dgram_handler(loop lo) :
-    m_pac(MSGPACK_UNPACKER_INIT_BUFFER_SIZE),
+    m_pac(),
     m_socket(lo->io_service()),
     m_strand(lo->io_service())
 {
