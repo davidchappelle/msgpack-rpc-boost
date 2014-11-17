@@ -13,10 +13,11 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src)
 
 option(shared "build msgpack-rpc-boost as a shared library" ON)
 
-if(NOT shared)
-    set(Boost_USE_STATIC_LIBS ON)
-else()
+if(shared)
     add_definitions(-DBOOST_ALL_DYN_LINK)
+else()
+    set(Boost_USE_STATIC_LIBS ON)
+    add_definitions(-DBOOST_ASIO_SEPARATE_COMPILATION)
 endif()
 
 find_package (Boost REQUIRED COMPONENTS COMPONENTS system thread filesystem regex log)
