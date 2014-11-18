@@ -11,7 +11,7 @@ set(CMAKE_CXX_FLAGS "-std=c++11 -Wall ${CMAKE_CXX_FLAGS}")
 
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src)
 
-option(shared "build msgpack-rpc-boost as a shared library" ON)
+option(shared "build msgpack-rpc-boost as a shared library" OFF)
 
 if(shared)
     add_definitions(-DBOOST_ALL_DYN_LINK)
