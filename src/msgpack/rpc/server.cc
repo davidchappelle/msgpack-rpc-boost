@@ -153,6 +153,5 @@ int server::get_request_num() const
     return static_cast<server_impl*>(m_pimpl.get())->get_request_num();
 }
 
-
 }  // namespace rpc
 }  // namespace msgpack

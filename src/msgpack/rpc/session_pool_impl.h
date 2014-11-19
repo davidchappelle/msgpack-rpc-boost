@@ -21,12 +21,12 @@
 #include "session_pool.h"
 #include "transport_impl.h"
 
+#include <boost/asio/deadline_timer.hpp>
 #include <boost/thread.hpp>
 #include <memory>
 
 namespace msgpack {
 namespace rpc {
-
 
 class session_pool_impl {
 public:
@@ -42,7 +42,9 @@ public:
         { return m_loop; }
 
 public:
-    void step_timeout();
+    void arm_step_timer();
+    void disarm_step_timer();
+    void step_timer_handler(const boost::system::error_code& err);
     void set_timeout(unsigned int sec);
 
 private:
@@ -58,6 +60,7 @@ private:
     std::map<address, entry_t> m_table;
     boost::mutex m_table_mutex;
     std::unique_ptr<builder> m_builder;
+    boost::asio::deadline_timer m_step_timer;
 
 private:
     session_pool_impl(const session_pool_impl&);

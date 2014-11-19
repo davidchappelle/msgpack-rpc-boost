@@ -7,7 +7,7 @@ set(VERSION "${VERSION_MAJOR}.${VERSION_MINOR}")
 set(BUILD_TESTS $ENV{BUILD_TESTS})
 
 ##########################################
-set(CMAKE_CXX_FLAGS "-std=c++11 -Wall ${CMAKE_CXX_FLAGS}")
+set(CMAKE_CXX_FLAGS "-std=c++11 -O0 -g -Wall ${CMAKE_CXX_FLAGS}")
 
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src)
 
@@ -42,11 +42,13 @@ if(NOT shared)
     set(CMAKE_FIND_LIBRARY_SUFFIXES ${_messagepack_ORIG_CMAKE_FIND_LIBRARY_SUFFIXES})
 endif()
 
-include_directories (${Boost_INCLUDE_DIRS}
-  ${MSGPACK_INCLUDE_DIR}
-  ${OPENSSL_INCLUDE_DIRS})
+include_directories (
+    ${Boost_INCLUDE_DIRS}
+    ${MSGPACK_INCLUDE_DIR}
+    ${OPENSSL_INCLUDE_DIRS})
 
-link_libraries (${Boost_LIBRARIES}
+link_libraries (
+    ${Boost_LIBRARIES}
     ${MSGPACK_LIBRARY}
     ${OPENSSL_LIBRARIES})
 

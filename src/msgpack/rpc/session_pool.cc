@@ -32,11 +32,17 @@ static const unsigned int SESSION_POOL_TIME_LIMIT = 60;
 
 
 session_pool_impl::session_pool_impl(const builder& b, loop lo) :
-    m_loop(lo), m_builder(b.copy())
+    m_loop(lo),
+    m_builder(b.copy()),
+    m_step_timer(m_loop->io_service())
 {
+    arm_step_timer();
 }
 
-session_pool_impl::~session_pool_impl() { }
+session_pool_impl::~session_pool_impl()
+{
+    disarm_step_timer();
+}
 
 session session_pool_impl::get_session(const address& addr)
 {
@@ -61,8 +67,24 @@ void session_pool_impl::set_timeout(unsigned int sec)
     m_builder->set_timeout(sec);
 }
 
-void session_pool_impl::step_timeout()
+void session_pool_impl::arm_step_timer()
 {
+    m_step_timer.expires_from_now(boost::posix_time::seconds(1));
+    m_step_timer.async_wait(std::bind(
+            &session_pool_impl::step_timer_handler, this, std::placeholders::_1));
+}
+
+void session_pool_impl::disarm_step_timer()
+{
+    m_step_timer.cancel();
+}
+
+void session_pool_impl::step_timer_handler(const boost::system::error_code& err)
+{
+    if (err == boost::asio::error::operation_aborted) {
+        return;
+    }
+
     boost::mutex::scoped_lock lk(m_table_mutex);
     std::vector<shared_future> timedout;
 
@@ -79,17 +101,10 @@ void session_pool_impl::step_timeout()
             }
             --e.ttl;
         }
-        e.session->step_timeout(&timedout);
         ++it;
     }
 
-    if (!timedout.empty()) {
-        for (std::vector<shared_future>::iterator it(timedout.begin()),
-                it_end(timedout.end()); it != it_end; ++it) {
-            shared_future& f = *it;
-            f->set_result(object(), TIMEOUT_ERROR, auto_zone());
-        }
-    }
+    arm_step_timer();
 }
 
 // session pool
@@ -97,19 +112,16 @@ void session_pool_impl::step_timeout()
 session_pool::session_pool(loop lo) :
     m_pimpl(new session_pool_impl(tcp_builder(), lo))
 {
-    start_timeout();
 }
 
 session_pool::session_pool(const builder& b, loop lo) :
     m_pimpl(new session_pool_impl(b, lo))
 {
-    start_timeout();
 }
 
 session_pool::session_pool(shared_session_pool pimpl) :
     m_pimpl(pimpl)
 {
-    start_timeout();
 }
 
 session_pool::~session_pool()
@@ -168,24 +180,6 @@ void session_pool::join()
 bool session_pool::is_running()
 {
     return get_loop()->is_running();
-}
-
-// timeout
-
-static bool step_timeout(weak_session_pool wsp)
-{
-    shared_session_pool sp = wsp.lock();
-    if (!sp) {
-        return false;
-    }
-    sp->step_timeout();
-    return true;
-}
-
-void session_pool::start_timeout()
-{
-    get_loop()->add_timer(1, std::bind(&step_timeout,
-        weak_session_pool(m_pimpl)));
 }
 
 void session_pool::set_timeout(unsigned int sec)

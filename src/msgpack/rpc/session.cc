@@ -34,10 +34,21 @@ session_impl::session_impl(const address& addr, loop lo) :
     m_addr(addr),
     m_loop(lo),
     m_msgid_rr(1),
-    m_timeout(30)
-{ }
+    m_timeout(30),
+    m_step_timer(m_loop->io_service())
+{
+    // TODO: We can improve performance here by only arming the
+    //       the step timer when there are actually any requests
+    //       to process. However, it will require some refactoring
+    //       of the request table and session impl code to avoid
+    //       race conditions.
+    arm_step_timer();
+}
 
-session_impl::~session_impl() { }
+session_impl::~session_impl()
+{
+    disarm_step_timer();
+}
 
 void session_impl::build(const builder& b)
 {
@@ -68,6 +79,7 @@ future session_impl::send_request_impl(msgid_t msgid, std::string method,
     std::unique_ptr<with_shared_zone<vrefbuffer> > vbuf)
 {
     BOOST_LOG_TRIVIAL(debug) << "sending... msgid=" <<  msgid;
+
     shared_future f(new future_impl(msgid, shared_from_this(), m_loop));
     m_reqtable.insert(msgid, f);
 
@@ -90,8 +102,24 @@ msgid_t session_impl::next_msgid()
     return atomic_increment(&m_msgid_rr);
 }
 
-void session_impl::step_timeout()
+void session_impl::arm_step_timer()
 {
+    m_step_timer.expires_from_now(boost::posix_time::seconds(1));
+    m_step_timer.async_wait(std::bind(
+            &session_impl::step_timer_handler, this, std::placeholders::_1));
+}
+
+void session_impl::disarm_step_timer()
+{
+    m_step_timer.cancel();
+}
+
+void session_impl::step_timer_handler(const boost::system::error_code& err)
+{
+    if (err == boost::asio::error::operation_aborted) {
+        return;
+    }
+
     std::vector<shared_future> timedout;
     m_reqtable.step_timeout(&timedout);
     if (!timedout.empty()) {
@@ -104,6 +132,8 @@ void session_impl::step_timeout()
 #endif
         }
     }
+
+    arm_step_timer();
 }
 
 void session_impl::step_timeout(std::vector<shared_future>* timedout)

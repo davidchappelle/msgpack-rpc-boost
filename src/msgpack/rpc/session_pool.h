@@ -50,13 +50,10 @@ public:
     void join();
     bool is_running();
     void set_timeout(unsigned int sec);
-    // FIXME void add_signal(int signo, function<bool ()> callback);
 
 protected:
     session_pool(shared_session_pool pimpl);
     shared_session_pool m_pimpl;
-
-    void start_timeout();
 
 private:
     session_pool(const session_pool&);

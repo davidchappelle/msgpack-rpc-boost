@@ -19,7 +19,6 @@
 #define MSGPACK_RPC_LOOP_H__
 
 #include <boost/asio.hpp>
-#include <boost/asio/deadline_timer.hpp>
 #include <boost/function.hpp>
 #include <boost/thread.hpp>
 #include <functional>
@@ -46,23 +45,11 @@ public:
     void end();
     void submit(std::function<void ()> callback);
 
-    int add_signal(int signo, std::function<void
-             (const boost::system::error_code& error, int signo)> handler);
-    void remove_signal(int id);
-
-    void add_timer(int sec, std::function<bool ()> handler);
-    void step_timeout(int sec, std::function<bool ()> handler,
-             const boost::system::error_code& err);
-
 private:
     void add_worker(size_t num);
 
 private:
-    boost::asio::io_service m_io;
-#if BOOST_VERSION >= 104800
-    boost::asio::signal_set m_sigset;
-#endif
-    boost::asio::deadline_timer m_timer;
+    boost::asio::io_service m_io_service;
     std::vector< std::shared_ptr<boost::thread> > m_workers;
 };
 

@@ -23,6 +23,7 @@
 #include "transport.h"
 #include "address.h"
 #include "exception.h"
+
 #include <string>
 
 namespace msgpack {
@@ -104,10 +105,6 @@ public:
     ~client();
 
     class base;
-
-private:
-    // loop utilize
-    void start_timeout();
 
 private:
     client();

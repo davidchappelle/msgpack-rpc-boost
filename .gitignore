@@ -16,6 +16,7 @@ ac/
 autom4te.cache/
 aclocal.m4
 libtool
+build/
 test/async_call
 test/async_server
 test/callback

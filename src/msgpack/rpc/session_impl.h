@@ -24,6 +24,7 @@
 #include "transport_impl.h"
 #include "impl_fwd.h"
 
+#include <boost/asio/deadline_timer.hpp>
 #include <memory>
 
 namespace msgpack {
@@ -74,7 +75,10 @@ public:
     void on_connect_failed();
     void on_system_error(const boost::system::error_code& err);
 
-    void step_timeout();
+private:
+    void arm_step_timer();
+    void disarm_step_timer();
+    void step_timer_handler(const boost::system::error_code& err);
     void step_timeout(std::vector<shared_future>* timedout);
 
 private:
@@ -88,6 +92,7 @@ private:
     reqtable m_reqtable;
 
     unsigned int m_timeout;
+    boost::asio::deadline_timer m_step_timer;
 
 private:
     session_impl();

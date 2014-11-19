@@ -28,44 +28,24 @@ namespace rpc {
 client::client(const std::string& host, uint16_t port, loop lo) :
     session(session_impl::create(tcp_builder(), address(host, port), lo))
 {
-    start_timeout();
 }
 
 client::client(const std::string& addr, loop lo) :
     session(session_impl::create(tcp_builder(), address(addr), lo))
 {
-    start_timeout();
 }
 
 client::client(const address& addr, loop lo) :
     session(session_impl::create(tcp_builder(), addr, lo))
 {
-    start_timeout();
 }
 
 client::client(const builder& b, const address& addr, loop lo) :
     session(session_impl::create(b, addr, lo))
 {
-    start_timeout();
 }
 
 client::~client() { }
-
-static bool step_timeout(weak_session ws)
-{
-    shared_session s = ws.lock();
-    if(!s) {
-        return false;
-    }
-    s->step_timeout();
-    return true;
-}
-
-void client::start_timeout()
-{
-    m_pimpl->get_loop()->add_timer(1, std::bind(&step_timeout,
-        weak_session(session::m_pimpl)));
-}
 
 }  // namespace rpc
 }  // namespace msgpack
