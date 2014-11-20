@@ -22,8 +22,6 @@ endif()
 
 find_package (Boost REQUIRED COMPONENTS COMPONENTS system thread filesystem regex log)
 
-find_package (OpenSSL QUIET)
-
 if(NOT shared)
     set( _messagepack_ORIG_CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_FIND_LIBRARY_SUFFIXES})
     set(CMAKE_FIND_LIBRARY_SUFFIXES .a)
@@ -44,13 +42,11 @@ endif()
 
 include_directories (
     ${Boost_INCLUDE_DIRS}
-    ${MSGPACK_INCLUDE_DIR}
-    ${OPENSSL_INCLUDE_DIRS})
+    ${MSGPACK_INCLUDE_DIR})
 
 link_libraries (
     ${Boost_LIBRARIES}
-    ${MSGPACK_LIBRARY}
-    ${OPENSSL_LIBRARIES})
+    ${MSGPACK_LIBRARY})
 
 ##########################################
 
