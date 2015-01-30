@@ -7,7 +7,7 @@ set(VERSION "${VERSION_MAJOR}.${VERSION_MINOR}")
 set(BUILD_TESTS $ENV{BUILD_TESTS})
 
 ##########################################
-set(CMAKE_CXX_FLAGS "-std=c++11 -O0 -g -Wall ${CMAKE_CXX_FLAGS}")
+set(CMAKE_CXX_FLAGS "-std=c++11 -Wall ${CMAKE_CXX_FLAGS}")
 
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src)
 
