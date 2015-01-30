@@ -20,7 +20,7 @@ else()
     add_definitions(-DBOOST_ASIO_SEPARATE_COMPILATION)
 endif()
 
-find_package (Boost REQUIRED COMPONENTS COMPONENTS system thread filesystem regex log)
+find_package (Boost REQUIRED COMPONENTS COMPONENTS system thread filesystem log)
 
 if(NOT shared)
     set( _messagepack_ORIG_CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_FIND_LIBRARY_SUFFIXES})
