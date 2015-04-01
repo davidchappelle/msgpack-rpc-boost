@@ -18,6 +18,7 @@
 #include "exception_impl.h"
 #include "future_impl.h"
 
+#include <msgpack.hpp>
 #include <boost/log/trivial.hpp>
 
 namespace msgpack {
