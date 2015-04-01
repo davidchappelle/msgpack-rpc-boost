@@ -8,6 +8,7 @@
 #include "../transport_impl.h"
 
 #include <memory>
+#include <msgpack/unpack.hpp>
 
 namespace msgpack {
 namespace rpc {

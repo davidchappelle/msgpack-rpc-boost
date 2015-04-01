@@ -2,8 +2,10 @@
 // msgpack::rpc::buffer - Cluster Communication Framework
 //
 
-#include <assert.h>
 #include "buffer.h"
+
+#include <assert.h>
+#include <msgpack.hpp>
 
 namespace msgpack {
 namespace rpc {

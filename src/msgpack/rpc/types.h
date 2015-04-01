@@ -19,7 +19,7 @@
 #define MSGPACK_RPC_TYPES_H__
 
 #include <memory>
-#include <msgpack.hpp>
+#include <msgpack_fwd.hpp>
 
 namespace msgpack {
 namespace rpc {

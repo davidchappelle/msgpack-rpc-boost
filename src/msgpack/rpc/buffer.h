@@ -5,9 +5,7 @@
 #define MSGPACK_RPC_BUFFER_H__
 
 #include <boost/shared_array.hpp>
-#include <msgpack.hpp>
-#include <msgpack/object.hpp>
-#include <msgpack/type.hpp>
+#include <msgpack_fwd.hpp>
 
 namespace msgpack {
 namespace rpc {

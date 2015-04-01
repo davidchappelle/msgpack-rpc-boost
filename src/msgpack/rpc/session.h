@@ -26,6 +26,9 @@
 #include "caller.h"
 #include "impl_fwd.h"
 
+#include <msgpack/sbuffer.hpp>
+#include <msgpack/vrefbuffer.hpp>
+
 namespace msgpack {
 namespace rpc {
 
