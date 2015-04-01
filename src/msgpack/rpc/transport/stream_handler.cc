@@ -3,6 +3,8 @@
 #include <boost/log/trivial.hpp>
 #include <functional>
 
+#include <msgpack.hpp>
+
 namespace msgpack {
 namespace rpc {
 
