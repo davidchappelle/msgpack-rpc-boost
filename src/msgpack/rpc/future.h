@@ -25,7 +25,6 @@
 #include <functional>
 #include <msgpack_fwd.hpp>
 #include <msgpack/adaptor/nil.hpp>
-#include <string>
 #include <utility> // for std::move()
 
 namespace msgpack {
