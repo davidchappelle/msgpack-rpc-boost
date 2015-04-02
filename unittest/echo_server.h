@@ -17,17 +17,17 @@ public:
             if (method == "add") {
                 std::tuple<int, int> params;
                 req.params().convert(&params);
-                add(req, params.get<0>(), params.get<1>());
+                add(req, std::get<0>(params), std::get<1>(params));
 
             } else if (method == "echo") {
                 std::tuple<std::string> params;
                 req.params().convert(&params);
-                echo(req, params.get<0>());
+                echo(req, std::get<0>(params));
 
             } else if (method == "echo_huge") {
                 std::tuple<msgpack::type::raw_ref> params;
                 req.params().convert(&params);
-                echo_huge(req, params.get<0>());
+                echo_huge(req, std::get<0>(params));
 
             } else if (method == "err") {
                 std::tuple<> params;

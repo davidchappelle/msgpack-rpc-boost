@@ -49,7 +49,7 @@ int main(int argc, char **argv)
         << std::endl;
 
     msglife.reset(new msgpack::zone());
-    msg = raw_ref((char*)msglife->malloc(ATTACK_SIZE), ATTACK_SIZE);
+    msg = raw_ref((char*)msglife->allocate_align(ATTACK_SIZE), ATTACK_SIZE);
     memset((char *)msg.ptr, 0, ATTACK_SIZE);
 
     test.reset(new attacker());

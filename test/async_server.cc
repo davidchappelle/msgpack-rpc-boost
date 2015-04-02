@@ -29,13 +29,14 @@ public:
     virtual void dispatch(rpc::request req)
     {
         std::string method = req.method().as<std::string>();
-        msgpack::type::tuple<int, int> params(req.params());
+        msgpack::type::tuple<int, int> params;
+        req.params().convert(&params);
 
         rpc::session s = m_svr->get_session("127.0.0.1", 18811);
         rpc::future f = s.call(method, params.get<0>(), params.get<1>());
         f.attach_callback(std::bind(&callback, std::placeholders::_1, req));
     }
-    
+
 private:
     msgpack::rpc::server *m_svr;
 };
