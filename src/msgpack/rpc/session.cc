@@ -24,7 +24,7 @@
 #include "session_impl.h"
 
 #include <boost/log/trivial.hpp>
-#include <msgpack.hpp>
+
 
 namespace msgpack {
 namespace rpc {
