@@ -21,8 +21,6 @@
 #include "types.h"
 
 #include <memory>
-#include <msgpack/sbuffer.hpp>
-#include <msgpack/vrefbuffer.hpp>
 
 namespace msgpack {
 namespace rpc {

@@ -9,8 +9,6 @@
 
 #include <boost/asio.hpp>
 #include <memory>
-#include <msgpack/sbuffer.hpp>
-#include <msgpack/unpack.hpp>
 
 namespace msgpack {
 namespace rpc {

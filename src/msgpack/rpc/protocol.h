@@ -18,9 +18,8 @@
 #ifndef MSGPACK_RPC_PROTOCOL_H__
 #define MSGPACK_RPC_PROTOCOL_H__
 
+#include <msgpack.hpp>
 #include "atomic_ops.h"
-
-#include <msgpack_fwd.hpp>
 
 namespace msgpack {
 namespace rpc {

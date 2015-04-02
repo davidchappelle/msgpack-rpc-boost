@@ -23,8 +23,6 @@
 #include "types.h"
 
 #include <functional>
-#include <msgpack_fwd.hpp>
-#include <msgpack/adaptor/nil.hpp>
 #include <utility> // for std::move()
 
 namespace msgpack {
@@ -57,8 +55,8 @@ public:
     /// @param ms - time in milliseconds
     bool timed_wait(unsigned ms);
 
-    msgpack::object result() const;
-    msgpack::object error() const;
+    object result() const;
+    object error() const;
 
     auto_zone& zone();
     const auto_zone& zone() const;

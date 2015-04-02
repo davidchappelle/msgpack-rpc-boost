@@ -22,10 +22,6 @@
 #include "impl_fwd.h"
 #include "types.h"
 
-#include <msgpack/adaptor/nil.hpp>
-#include <msgpack/sbuffer.hpp>
-#include <msgpack/vrefbuffer.hpp>
-
 namespace msgpack {
 namespace rpc {
 

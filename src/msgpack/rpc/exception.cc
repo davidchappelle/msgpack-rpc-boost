@@ -17,8 +17,6 @@
 //
 #include "exception_impl.h"
 #include "protocol.h"
-
-#include <msgpack.hpp>
 #include <sstream>
 #include <string.h>
 
